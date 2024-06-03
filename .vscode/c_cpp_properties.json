@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/botcanh/turtlebot3_ws/install/turtlebot3_gazebo/include/**",
+        "/home/botcanh/turtlebot3_ws/install/turtlebot3_fake_node/include/**",
+        "/home/botcanh/turtlebot3_ws/install/nav2_straightline_planner/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/botcanh/dev_ws/src/two_wheeled_robot/include/**",
+        "include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
