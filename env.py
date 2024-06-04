@@ -25,9 +25,8 @@ from geometry_msgs.msg import Twist, Point, Pose
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 from std_srvs.srv import Empty
-from tf.transformations import euler_from_quaternion, quaternion_from_euler
-from respawnGoal import Respawn
 MIN_DISTANCE=0.5
+ERROR_DISTANCE=0.1
 class Env():
     def __init__(self, action_size):
         self.action_size = action_size
@@ -39,17 +38,22 @@ class Env():
         self.pause_proxy = rospy.ServiceProxy('gazebo/pause_physics', Empty)
 
     def getState(self, camera):
-        pos_x,pos_y, dis_range = camera()
+        done = False
+        pos_x,pos_y, dis_range = self.camera()
         min_ran = np.min(dis_range)
         posi_x=pos_x(np.argmin(dis_range))
         posi_y= pos_y(np.argmin(dis_range))
-        return posi_x, posi_y, min_ran
+        state = [posi_x,posi_y,min_ran]
+        if min_ran < ERROR_DISTANCE:
+            done = True
+        return state, done
 
-    def setReward(self, state, done, action):
+    def setReward(self, state,done,action):
+        done = False
         pre_action = action[-2]
         now_action = action[-1]
         min_ran = state[-1]
-        if action == 0:#straight
+        if now_action == 0:#straight
             r_action = +0.2
         else:
             r_action = -0.1
@@ -57,11 +61,13 @@ class Env():
             r_change = -0.3
         else:
             r_change = +0.2
-        if min_ran < MIN_DISTANCE:
+        if min_ran < MIN_DISTANCE and min_ran > ERROR_DISTANCE:
             r_dis = -0.5
         else:
-            r_dis = +0.05
+            r_dis = +0.5
+
         reward = r_change + r_action + r_dis
+
         return reward
 
     def step(self, action):
@@ -80,8 +86,8 @@ class Env():
             except:
                 pass
 
-        state, done = self.getState(data)
-        reward = self.setReward(state, done, action)
+        state, done= self.getState(data)
+        reward = self.setReward(state, action)
 
         return np.asarray(state), reward, done
 
@@ -100,6 +106,6 @@ class Env():
                 pass
 
         self.goal_distance = self.getGoalDistace()
-        state, done = self.getState(data)
+        state, done= self.getState(data)
 
         return np.asarray(state)
