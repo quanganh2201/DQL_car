@@ -24,6 +24,10 @@ import cv2
 import sys
 
 MIN_DISTANCE=0.5
+XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot.urdf'
+X_INIT = 0.0
+Y_INIT = 0.0
+THETA_INIT = 0.0
 
 class Env(Node):
     def __init__(self):
