@@ -1,23 +1,4 @@
-#!/usr/bin/env python
-#################################################################################
-# Copyright 2018 ROBOTIS CO., LTD.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#################################################################################
-
-# Authors: Gilbert #
-
-import rospy
+import rclpy
 import numpy as np
 import math
 from math import pi
@@ -25,11 +6,28 @@ from geometry_msgs.msg import Twist, Point, Pose
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 from std_srvs.srv import Empty
-from tf.transformations import euler_from_quaternion, quaternion_from_euler
-from respawnGoal import Respawn
+from gazebo_msgs.srv import DeleteEntity
+from gazebo_msgs.srv import SpawnEntity
+from gazebo_msgs.msg import ModelState
+from rclpy.time import Time
+from rclpy.node import Node
+from datetime import datetime
+from std_srvs.srv import Trigger
+import time
+
+import sys
+
 MIN_DISTANCE=0.5
+
 class Env():
-    def __init__(self, action_size):
+    def __init__(self):
+        super.__init__('Learning node')
+        self.delclient = self.create_client(DeleteEntity, '/delete_entity')
+        self.delresult = False
+
+        self.spawnclient = self.create_client(SpawnEntity, '/spawn_entity')
+        self.req = SpawnEntity.Request()
+        '''
         self.action_size = action_size
         self.position = ...
         self.pub_cmd_vel = rospy.Publisher('cmd_vel', Twist, queue_size=5)
@@ -37,6 +35,7 @@ class Env():
         self.reset_proxy = rospy.ServiceProxy('gazebo/reset_simulation', Empty)
         self.unpause_proxy = rospy.ServiceProxy('gazebo/unpause_physics', Empty)
         self.pause_proxy = rospy.ServiceProxy('gazebo/pause_physics', Empty)
+        '''
 
     def getState(self, camera):
         pos_x,pos_y, dis_range = camera()
