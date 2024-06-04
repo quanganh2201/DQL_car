@@ -6,6 +6,10 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from ament_index_python.packages import get_package_share_directory
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import ThisLaunchFileDir
  
  
 def generate_launch_description():
@@ -15,9 +19,13 @@ def generate_launch_description():
   package_name = 'two_wheeled_robot'
   robot_name_in_model = 'two_wheeled_robot'
   rviz_config_file_path = 'rviz/rviz_basic_settings.rviz'
-  urdf_file_path = 'urdf/two_wheeled_robot.urdf'
+  #urdf_file_path = 'urdf/two_wheeled_robot_copy.urdf'
+  #urdf_file_path = '/home/botcanh/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf'
   world_file_path = 'worlds/yolo_test.world'
-     
+  urdf = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot_copy.urdf'
+  xml = open(urdf, 'r').read()
+  xml = xml.replace('"', '\\"')   
+  swpan_args = '{name: \"two_wheeled_robot\", xml: \"'  +  xml + '\" }' 
   # Pose where we want to spawn the robot
   spawn_x_val = '0.0'
   spawn_y_val = '3.0'
@@ -28,7 +36,7 @@ def generate_launch_description():
   # Set the path to different files and folders.  
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros')   
   pkg_share = FindPackageShare(package=package_name).find(package_name)
-  default_urdf_model_path = os.path.join(pkg_share, urdf_file_path)
+  #default_urdf_model_path = os.path.join(pkg_share, urdf_file_path)
   default_rviz_config_path = os.path.join(pkg_share, rviz_config_file_path)
   world_path = os.path.join(pkg_share, world_file_path)
   gazebo_models_path = os.path.join(pkg_share, gazebo_models_path)
@@ -63,20 +71,20 @@ def generate_launch_description():
     default_value='false',
     description='Whether to apply a namespace to the navigation stack')
              
-  declare_rviz_config_file_cmd = DeclareLaunchArgument(
-    name='rviz_config_file',
-    default_value=default_rviz_config_path,
-    description='Full path to the RVIZ config file to use')
+  #declare_rviz_config_file_cmd = DeclareLaunchArgument(
+  ##  name='rviz_config_file',
+  # default_value=default_rviz_config_path,
+  #  description='Full path to the RVIZ config file to use')
  
   declare_simulator_cmd = DeclareLaunchArgument(
     name='headless',
     default_value='False',
     description='Whether to execute gzclient')
  
-  declare_urdf_model_path_cmd = DeclareLaunchArgument(
-    name='urdf_model', 
-    default_value=default_urdf_model_path, 
-    description='Absolute path to robot urdf file')
+  #declare_urdf_model_path_cmd = DeclareLaunchArgument(
+  #  name='urdf_model', 
+  #  default_value=default_urdf_model_path, 
+  #  description='Absolute path to robot urdf file')
      
   declare_use_robot_state_pub_cmd = DeclareLaunchArgument(
     name='use_robot_state_pub',
@@ -104,17 +112,17 @@ def generate_launch_description():
     description='Full path to the world model file to load')
    
   # Subscribe to the joint states of the robot, and publish the 3D pose of each link.    
-  start_robot_state_publisher_cmd = Node(
-    package='robot_state_publisher',
-    executable='robot_state_publisher',
-    parameters=[{'robot_description': Command(['xacro ', urdf_model])}])
+  #start_robot_state_publisher_cmd = Node(
+  #  package='robot_state_publisher',
+  #  executable='robot_state_publisher',
+  #  parameters=[{'robot_description': Command(['xacro ', urdf_model])}])
  
   # Publish the joint states of the robot
-  start_joint_state_publisher_cmd = Node(
-    package='joint_state_publisher',
-    executable='joint_state_publisher',
-    name='joint_state_publisher',
-    condition=UnlessCondition(gui))
+  #start_joint_state_publisher_cmd = Node(
+  #  package='joint_state_publisher',
+  #  executable='joint_state_publisher',
+  #  name='joint_state_publisher',
+  #  condition=UnlessCondition(gui))
  
   # Launch RViz
   start_rviz_cmd = Node(
@@ -122,7 +130,8 @@ def generate_launch_description():
     executable='rviz2',
     name='rviz2',
     output='screen',
-    arguments=['-d', rviz_config_file])
+    #arguments=['-d', rviz_config_file]
+    )
  
   # Start Gazebo server
   start_gazebo_server_cmd = IncludeLaunchDescription(
@@ -134,7 +143,16 @@ def generate_launch_description():
   start_gazebo_client_cmd = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')),
     condition=IfCondition(PythonExpression([use_simulator, ' and not ', headless])))
- 
+
+  spawn_sdf_cmd = ExecuteProcess(
+        cmd=[
+            'ros2', 'service', 'call',
+            '/spawn_entity', 'gazebo_msgs/SpawnEntity',
+            swpan_args
+        ],
+        output='screen'
+    )
+  '''
   # Launch the robot
   spawn_entity_cmd = Node(
     package='gazebo_ros', 
@@ -145,8 +163,10 @@ def generate_launch_description():
                     '-y', spawn_y_val,
                     '-z', spawn_z_val,
                     
-                    '-Y', spawn_yaw_val],
+                    '-Y', spawn_yaw_val,
+                    '-file', XML_FILE_PATH],
                     output='screen')
+  '''
  
   # Create the launch description and populate
   ld = LaunchDescription()
@@ -155,9 +175,9 @@ def generate_launch_description():
   ld.add_action(declare_use_joint_state_publisher_cmd)
   ld.add_action(declare_namespace_cmd)
   ld.add_action(declare_use_namespace_cmd)
-  ld.add_action(declare_rviz_config_file_cmd)
+  #ld.add_action(declare_rviz_config_file_cmd)
   ld.add_action(declare_simulator_cmd)
-  ld.add_action(declare_urdf_model_path_cmd)
+  #ld.add_action(declare_urdf_model_path_cmd)
   ld.add_action(declare_use_robot_state_pub_cmd)  
   ld.add_action(declare_use_rviz_cmd) 
   ld.add_action(declare_use_sim_time_cmd)
@@ -167,9 +187,9 @@ def generate_launch_description():
   # Add any actions
   ld.add_action(start_gazebo_server_cmd)
   ld.add_action(start_gazebo_client_cmd)
-  ld.add_action(spawn_entity_cmd)
-  ld.add_action(start_robot_state_publisher_cmd)
-  ld.add_action(start_joint_state_publisher_cmd)
+  ld.add_action(spawn_sdf_cmd)
+  #ld.add_action(start_robot_state_publisher_cmd)
+  #ld.add_action(start_joint_state_publisher_cmd)
   ld.add_action(start_rviz_cmd)
  
   return ld

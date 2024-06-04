@@ -25,6 +25,7 @@ ament_python_install_package(${PROJECT_NAME})
 # Install Python executables
 install(PROGRAMS
   scripts/image_node.py
+  scripts/env.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rclpy
 import numpy as np
 import math
@@ -24,13 +25,16 @@ import cv2
 import sys
 
 MIN_DISTANCE=0.5
-XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot.urdf'
+ERROR_DISTANCE = 0.1
+XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot_copy.urdf'
+#XML_FILE_PATH = '/home/botcanh/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf'
 X_INIT = 0.0
 Y_INIT = 0.0
 THETA_INIT = 0.0
 
 class Env(Node):
     def __init__(self):
+        super().__init__('env_node')
         self.delclient = self.create_client(DeleteEntity, '/delete_entity')
         self.delresult = False
 
@@ -51,9 +55,9 @@ class Env(Node):
         self.img_pub = self.create_publisher(Image, "/inference_result", 1)
         self.view_depth = None
         self.depth_img = None
-        self.posX = np.empty([1],type = int)
-        self.posY = np.empty([1],type = int)
-        self.range = np.empty([1],type = float)
+        self.posX = np.empty([1],dtype = int)
+        self.posY = np.empty([1],dtype = int)
+        self.range = np.empty([1],dtype = float)
 
         timer_period = 0.1
         self.timer = self.create_timer(timer_period, self.timer_callback)
@@ -113,13 +117,12 @@ class Env(Node):
         self.view_depth = np.array(self.view_depth, dtype=np.float32)
         #alpha: contrast 0 -127, beta: brightness 0 -100
         self.depth_img = cv2.convertScaleAbs(self.view_depth, alpha=10 , beta=30)
-        cv2.imshow('view', self.depth_img)
         #cv2.imshow('view0', self.view_depth)
 
     def image_callback(self, msg):
-        self.posX = np.empty([1],type = int)
-        self.posY = np.empty([1],type = int)
-        self.range = np.empty([1],type = float)
+        self.posX = np.empty([1],dtype = int)
+        self.posY = np.empty([1],dtype = int)
+        self.range = np.empty([1],dtype = float)
 
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         results = self.model(cv_image)
@@ -159,33 +162,41 @@ class Env(Node):
         
 
     def getState(self):
+        done = False
         min_ran = np.min(self.range)
-        posi_x=self.posX(np.argmin(self.range))
-        posi_y= self.posY(np.argmin(self.range))
-        return posi_x, posi_y, min_ran
+        posi_x=self.posX[np.argmin(self.range)]
+        posi_y= self.posY[np.argmin(self.range)]
+        if min_ran < ERROR_DISTANCE:
+            done = True
+        state = [posi_x, posi_y, min_ran]
+        return state, done
 
-    def setReward(self, state, done, action):
-        pre_action = action[-2]
-        now_action = action[-1]
+    def setReward(self, state, pre_action,action):
         min_ran = state[-1]
+        if pre_action == None:
+            pre = 0
         if action == 0:#straight
             r_action = +0.2
         else:
             r_action = -0.1
-        if (pre_action == 1 and now_action == 2) or (pre_action == 2 and now_action == 1):
+        if (pre_action == 1 and action == 2) or (pre_action == 2 and action == 1):
             r_change = -0.3
         else:
             r_change = +0.2
-        if min_ran < MIN_DISTANCE:
+        if min_ran < MIN_DISTANCE and min_ran > ERROR_DISTANCE:
             r_dis = -0.5
         else:
             r_dis = +0.05
-        reward = r_change + r_action + r_dis
+        reward = r_change + r_action + r_dis + pre
         return reward
 
     def step(self, action):
-        max_angular_vel = 1.5
-        ang_vel = ((self.action_size - 1)/2 - action) * max_angular_vel * 0.5
+        if action == 0:
+            ang_vel = 0.0
+        elif action == 1: #turn right
+            ang_vel = 0.4
+        elif action == 2:
+            ang_vel = -0.4
 
         vel_cmd = Twist()
         vel_cmd.linear.x = 0.15
@@ -193,20 +204,35 @@ class Env(Node):
         self.velPub.publish(vel_cmd)
 
         state, done = self.getState()
-        reward = self.setReward(state, done, action)
-
-        return np.asarray(state), reward, done
+        return np.asarray(state), done
 
     def reset(self):
-        self.delete_entity('burger')
+        self.delete_entity('two_wheeled_robot')
 
         #SHOULD HAVE A TIMER HERE
+        print("deleted")
+        i = 0
+        while(i < 10000):
+            j = 0
+            while (j < 10000):
+                j = j + 1
+            i = i + 1
 
-        self.call_spawn_entity_service('burger', XML_FILE_PATH, X_INIT, Y_INIT, THETA_INIT)
- 
+        self.call_spawn_entity_service('two_wheeled_robot', XML_FILE_PATH, X_INIT, Y_INIT, THETA_INIT)
+        print("respawned")
         state, done = self.getState()
 
-        return np.asarray(state)
+        return state
     
     def timer_callback(self):
-        pass
+        self.reset()
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    a = Env()
+    rclpy.spin(a)
+
+if __name__ == '__main__':
+    main()
