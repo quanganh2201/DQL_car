@@ -26,6 +26,7 @@ ament_python_install_package(${PROJECT_NAME})
 install(PROGRAMS
   scripts/image_node.py
   scripts/env.py
+  scripts/model5.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

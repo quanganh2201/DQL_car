@@ -14,7 +14,7 @@ from rclpy.time import Time
 from rclpy.node import Node
 from datetime import datetime
 from std_srvs.srv import Trigger
-import time
+import random
 
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
@@ -22,10 +22,13 @@ from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 import cv2
 
+import model5
+import torch
+
 import sys
 
-MIN_DISTANCE=0.5
-ERROR_DISTANCE = 0.1
+MIN_DISTANCE=1.5
+ERROR_DISTANCE = 1.0
 XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot_copy.urdf'
 #XML_FILE_PATH = '/home/botcanh/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf'
 X_INIT = 0.0
@@ -44,6 +47,7 @@ class Env(Node):
         self.velPub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.callShutdown = False
 
+
         self.depth_subcription = self.create_subscription(Image,'/camera_link/depth/image_raw',self.process_data_depth,10)
         self.subscription = self.create_subscription(
             Image,
@@ -59,8 +63,43 @@ class Env(Node):
         self.posY = np.empty([1],dtype = int)
         self.range = np.empty([1],dtype = float)
 
+
+        self.EPISODES = 20 
+        self.steps = 500
+        self.current_step = 0
+        self.current_ep = 0
+        self.ep_done = False
+        self.pre_action = None
+        self.rewards = 0
+        self.step_count = 0
+        self.best_rewards = -10
+        self.current_state = None
+
+        #TRAIN PARAMETERS
+        self.train_model = model5.CarDQL()
+        self.num_states = 3 # expecting 2: position & velocity
+        self.num_actions = 3
+
+        self.epsilon = 1  # 1 = 100% random actions
+        self.memory = model5.ReplayMemory(self.train_model.replay_memory_size)
+        self.policy_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=64,fc2_dims=64, n_actions=self.num_actions)
+        self.target_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=64,fc2_dims=64, n_actions=self.num_actions)
+        # Make the target and policy networks the same (copy weights/biases from one network to the other)
+        self.target_dqn.load_state_dict(self.policy_dqn.state_dict())
+
+        # Policy network optimizer. "Adam" optimizer can be swapped to something else.
+        self.train_model.optimizer = torch.optim.Adam(self.policy_dqn.parameters(), lr=self.train_model.learning_rate_a)
+
+        # List to keep track of rewards collected per episode. Initialize list to 0's.
+        self.rewards_per_episode = []
+
+        # List to keep track of epsilon decay
+        self.epsilon_history = []
+
+
         timer_period = 0.1
         self.timer = self.create_timer(timer_period, self.timer_callback)
+
 
     # FOR SPAWNING MODEL IN GAZEBO
     def delete_entity(self, name):
@@ -126,7 +165,7 @@ class Env(Node):
 
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         results = self.model(cv_image)
-        print(cv_image.size)
+        #print(cv_image.size)
         height, width, _ = cv_image.shape
         img_center_x = cv_image.shape[0] // 2
         img_center_y = cv_image.shape[1] // 2
@@ -175,6 +214,8 @@ class Env(Node):
         min_ran = state[-1]
         if pre_action == None:
             pre = 0
+        else:
+            pre = 0
         if action == 0:#straight
             r_action = +0.2
         else:
@@ -221,11 +262,70 @@ class Env(Node):
         self.call_spawn_entity_service('two_wheeled_robot', XML_FILE_PATH, X_INIT, Y_INIT, THETA_INIT)
         print("respawned")
         state, done = self.getState()
-
+        self.current_step = 0
+        self.ep_done = False
+        self.pre_action = None
+        self.rewards = 0
+        self.step_count = 0
+        self.best_rewards = -10
         return state
     
     def timer_callback(self):
-        self.reset()
+        if self.ep_done == True:
+            self.current_state = self.reset()
+        else:
+            if self.current_state is None:
+                self.current_state, _ = self.getState()
+            self.current_step = self.current_step + 1
+            if self.current_step < self.steps:
+                # Select action based on epsilon-greedy
+                if random.random() < self.epsilon:
+                    # select random action
+                    action = np.random.choice([0,1,2])  # actions: 0=left,1=left,2=right
+                else:
+                    # select best action
+                    with torch.no_grad():
+                        action = self.policy_dqn(self.train_model.state_to_dqn_input(self.current_state)).argmax().item()
+
+                # Execute action
+                reward = self.setReward(self.current_state,self.pre_action,action)
+                self.current_state, done = self.step(action)
+
+                # Accumulate reward
+                self.rewards += reward
+                self.pre_action = action
+                # Save experience into memory
+                self.memory.append((self.current_state, action, self.current_state, reward, done))
+                print(self.current_step)
+            else:
+                self.rewards_per_episode.append(self.rewards)
+                self.ep_done = True
+                self.current_ep += 1
+                # Graph training progress
+                if (self.current_ep != 0 and self.current_ep % 1000 == 0):
+                    print(f'Episode {self.current_ep } Epsilon {self.epsilon}')
+
+                    self.train_model.plot_progress(self.rewards_per_episode, self.epsilon_history)
+
+                if self.rewards > self.best_rewards:
+                    self.best_rewards = self.rewards
+                    print(f'Best rewards so far: {self.best_rewards}')
+                    # Save policy
+                    torch.save(self.policy_dqn.state_dict(), f"car_dql_{self.current_ep}.pt")
+                # Check if enough experience has been collected
+                if len(self.memory) > self.train_model.mini_batch_size:
+                    mini_batch = self.memory.sample(self.train_model.mini_batch_size)
+                    self.train_model.optimize(mini_batch, self.policy_dqn, self.target_dqn)
+
+                    # Decay epsilon
+                    self.epsilon = max(self.epsilon - 1 / self.EPISODES, 0)
+                    self.epsilon_history.append(self.epsilon)
+
+                    # Copy policy network to target network after a certain number of steps
+                    if self.step_count > self.train_model.network_sync_rate:
+                        self.target_dqn.load_state_dict(self.policy_dqn.state_dict())
+                        self.step_count = 0
+                        # Close environment
 
 
 def main(args=None):
