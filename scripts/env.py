@@ -81,6 +81,7 @@ class Env(Node):
         self.y_distance = 500
         self.x_pre_distance = HORIZONTAL_DIS
         self.y_pre_distance = HORIZONTAL_DIS
+        self.distance = HORIZONTAL_DIS
 
         self.rewards = 0
         self.step_count = 0
@@ -222,6 +223,7 @@ class Env(Node):
     def odom_callback(self, msg):
         x = msg.pose.pose.position.x
         y = msg.pose.pose.position.y
+        self.distance = math.hypot(x-GOAL_X, y-GOAL_Y)
         self.x_distance = abs(x-GOAL_X)
         self.y_distance = abs(y-GOAL_Y)
 
