@@ -1,8 +1,6 @@
 import numpy as np
+import math
 
-a = np.empty([1], dtype=int)
-print(a)
-a = np.append(a, [3])
-b = np.min(a)
-print(a)
-print(b)
+a = (1,1)
+b = (2,2)
+print(math.hypot(a[1]- b[1],a[0]-b[0]))

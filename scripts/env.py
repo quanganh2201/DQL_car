@@ -27,13 +27,15 @@ import torch
 
 import sys
 
-MIN_DISTANCE=1.5
-ERROR_DISTANCE = 1.0
+MIN_DISTANCE=0.9
+ERROR_DISTANCE = 0.7
 XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot_copy.urdf'
 #XML_FILE_PATH = '/home/botcanh/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf'
 X_INIT = 0.0
 Y_INIT = 0.0
 THETA_INIT = 0.0
+GOAL_X = 50
+GOAL_Y = 50
 
 class Env(Node):
     def __init__(self):
@@ -47,7 +49,7 @@ class Env(Node):
         self.velPub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.callShutdown = False
 
-
+        self.odom_subcription = self.odom_subscription = self.create_subscription(Odometry,'/odom',self.odom_callback,10)
         self.depth_subcription = self.create_subscription(Image,'/camera_link/depth/image_raw',self.process_data_depth,10)
         self.subscription = self.create_subscription(
             Image,
@@ -59,13 +61,13 @@ class Env(Node):
         self.img_pub = self.create_publisher(Image, "/inference_result", 1)
         self.view_depth = None
         self.depth_img = None
-        self.posX = np.empty([1],dtype = int)
-        self.posY = np.empty([1],dtype = int)
-        self.range = np.empty([1],dtype = float)
-
+        self.posX = np.array([],dtype = int)
+        self.posY = np.array([],dtype = int)
+        self.range = np.array([],dtype = float)
+        self.distance  = 500
 
         self.EPISODES = 20 
-        self.steps = 500
+        self.steps = 2000
         self.current_step = 0
         self.current_ep = 0
         self.ep_done = False
@@ -159,9 +161,9 @@ class Env(Node):
         #cv2.imshow('view0', self.view_depth)
 
     def image_callback(self, msg):
-        self.posX = np.empty([1],dtype = int)
-        self.posY = np.empty([1],dtype = int)
-        self.range = np.empty([1],dtype = float)
+        self.posX = np.array([],dtype = int)
+        self.posY = np.array([],dtype = int)
+        self.range = np.array([],dtype = float)
 
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         results = self.model(cv_image)
@@ -189,24 +191,43 @@ class Env(Node):
                 if self.view_depth is None:
                     pass
                 else:
-                    depth = self.view_depth[center_y, center_x]
+                    #find the closest point within the box
+                    for y in range(left, right):
+                        for x in range(top, bottom):
+                            temp = self.view_depth[y, x]
+                            if temp < depth:
+                                depth = temp
                     cv2.putText(cv_image, f"{depth :.2f}m", (center_x + 5, center_y + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                    np.append(self.posX, center_x)
-                    np.append(self.posY, center_y)
-                    np.append(self.range, depth)
+                    self.posX = np.append(self.posX, center_x)
+                    self.posY = np.append(self.posY, center_y)
+                    self.range = np.append(self.range, depth)
 
         annotated_frame = results[0].plot(labels = True)
         img_msg = self.bridge.cv2_to_imgmsg(annotated_frame)  
         self.img_pub.publish(img_msg)
         
 
+    def odom_callback(self, msg):
+        x = msg.pose.pose.position.x
+        y = msg.pose.pose.position.y
+        self.distance = math.hypot(x-GOAL_X, y-GOAL_Y)
+
     def getState(self):
         done = False
-        min_ran = np.min(self.range)
-        posi_x=self.posX[np.argmin(self.range)]
-        posi_y= self.posY[np.argmin(self.range)]
-        if min_ran < ERROR_DISTANCE:
-            done = True
+        if self.range.size > 0:
+            min_ran = np.min(self.range)
+        else:
+            min_ran = 99999
+
+        if min_ran != 99999:
+            posi_x=self.posX[np.argmin(self.range)]
+            posi_y= self.posY[np.argmin(self.range)]
+            print('min_ran is ', min_ran)
+            if min_ran < ERROR_DISTANCE:
+                done = True
+        else:
+            posi_x = 0
+            posi_y = 0
         state = [posi_x, posi_y, min_ran]
         return state, done
 
@@ -270,7 +291,7 @@ class Env(Node):
         self.best_rewards = -10
         return state
     
-    def timer_callback(self):
+    def timer_callback(self): #train
         if self.ep_done == True:
             self.current_state = self.reset()
         else:
@@ -290,6 +311,9 @@ class Env(Node):
                 # Execute action
                 reward = self.setReward(self.current_state,self.pre_action,action)
                 self.current_state, done = self.step(action)
+                if done == True:
+                    self.ep_done = True
+
 
                 # Accumulate reward
                 self.rewards += reward
