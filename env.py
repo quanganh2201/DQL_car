@@ -231,16 +231,17 @@ class Env(Node):
         else:
             posi_x = 0
             posi_y = 0
-        state = [posi_x, posi_y, min_ran]
-        return state, distance
+        state = [posi_x, posi_y, min_ran, distance]
+        return state
 
-    def setReward(self, state, pre_action, action, pre_distance, distance):
+    def setReward(self, state, pre_action, action, pre_distance):
         done = False
-        min_ran = state[-1]
+        distance = state[-1]
+        min_ran = state[-2]
         if min_ran <= ERROR_DISTANCE:
             reward = -50
-            done = True
-        elif distance <= ERROR_DISTANCE:
+            done = True# tí sửa tên
+        elif distance <= ERROR_DISTANCE:#tí sửa tên
             reward = 50
             done = True
         else:
@@ -280,8 +281,8 @@ class Env(Node):
         vel_cmd.angular.z = ang_vel
         self.velPub.publish(vel_cmd)
 
-        state, distance = self.getState()
-        return np.asarray(state), distance
+        state= self.getState()
+        return np.asarray(state)
 
     def reset(self):
         self.delete_entity('two_wheeled_robot')
@@ -312,7 +313,7 @@ class Env(Node):
             self.current_state, self.done = self.reset()
         else:
             if self.current_state is None:
-                self.current_state, distance = self.getState()
+                self.current_state = self.getState()
             self.current_step = self.current_step + 1
             if self.current_step < self.steps and self.done == False:
                 # Select action based on epsilon-greedy
@@ -326,12 +327,12 @@ class Env(Node):
                             self.train_model.state_to_dqn_input(self.current_state)).argmax().item()
 
                 # Execute action
-                self.current_state, distance = self.step(action)
-                reward, self.done = self.setReward(self.current_state, self.pre_action, action, self.pre_distance, distance)
+                self.current_state= self.step(action)
+                reward, self.done = self.setReward(self.current_state, self.pre_action, action, self.pre_distance)
                 # Accumulate reward
                 self.rewards += reward
                 self.pre_action = action
-                self.pre_distance = distance
+                self.pre_distance = self.current_state[-1]
                 # Save experience into memory
                 self.memory.append((self.current_state, action, self.current_state, reward, self.done))
                 print(self.current_step)
