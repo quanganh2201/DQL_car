@@ -34,8 +34,10 @@ XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_rob
 X_INIT = 0.0
 Y_INIT = 0.0
 THETA_INIT = 0.0
-GOAL_X = 50
-GOAL_Y = 50
+GOAL_X = 17
+GOAL_Y = 2
+HORIZONTAL_DIS = 9999
+GOAL_THRESHOLD = 0.5
 
 
 class Env(Node):
@@ -67,18 +69,25 @@ class Env(Node):
         self.posX = np.array([], dtype=int)
         self.posY = np.array([], dtype=int)
         self.range = np.array([], dtype=float)
-        self.distance = 500
-        self.done = False
+
+        self.done = False  # done episode or not
         self.EPISODES = 20
-        self.steps = 2000
+        self.steps = 1000
         self.current_step = 0
         self.current_ep = 0
         self.ep_done = False
-        self.pre_action = None
-        self.pre_distance = None
+        self.pre_action = 0
+
+        self.x_distance = 500
+        self.y_distance = 500
+        self.x_pre_distance = HORIZONTAL_DIS
+        self.y_pre_distance = HORIZONTAL_DIS
+        self.distance = HORIZONTAL_DIS
+
         self.rewards = 0
         self.step_count = 0
-        self.best_rewards = -10
+        self.pre_best = -500
+        self.best_rewards = -500
         self.current_state = None
 
         # TRAIN PARAMETERS
@@ -216,56 +225,68 @@ class Env(Node):
         x = msg.pose.pose.position.x
         y = msg.pose.pose.position.y
         self.distance = math.hypot(x - GOAL_X, y - GOAL_Y)
+        self.x_distance = abs(x - GOAL_X)
+        self.y_distance = abs(y - GOAL_Y)
 
     def getState(self):
+        x_distance = self.x_distance
+        y_distance = self.y_distance
         distance = self.distance
         if self.range.size > 0:
             min_ran = np.min(self.range)
         else:
-            min_ran = 99999
+            min_ran = HORIZONTAL_DIS
 
-        if min_ran != 99999:
+        if min_ran != HORIZONTAL_DIS:
             posi_x = self.posX[np.argmin(self.range)]
             posi_y = self.posY[np.argmin(self.range)]
-            print('min_ran is ', min_ran)
         else:
             posi_x = 0
             posi_y = 0
-        state = [posi_x, posi_y, min_ran, distance]
+        state = [posi_x, posi_y,x_distance, y_distance, min_ran, distance]
         return state
 
-    def setReward(self, state, pre_action, action, pre_distance):
+    def setReward(self, state, pre_action, action, x_pre, y_pre):
         done = False
         distance = state[-1]
         min_ran = state[-2]
+        x_dis = state [-4]
+        y_dis = state[-3]
         if min_ran <= ERROR_DISTANCE:
-            reward = -50
-            done = True# tí sửa tên
-        elif distance <= ERROR_DISTANCE:#tí sửa tên
-            reward = 50
+            reward = -10
+            done = True
+        elif distance <= GOAL_THRESHOLD:
+            reward = 100
             done = True
         else:
+            '''
             if pre_action == None and pre_distance == None:
                 pre = 0
             else:
                 pre = 0
+            '''
+
             if action == 0:  # straight
-                r_action = +0.3
+                r_action = +0.03
             else:
-                r_action = -0.1
+                r_action = -0.01
+
             if (pre_action == 1 and action == 2) or (pre_action == 2 and action == 1):
-                r_change = -0.3
+                r_change = -0.03
             else:
-                r_change = +0.1
+                r_change = +0.01
+
             if min_ran < MIN_DISTANCE and min_ran > ERROR_DISTANCE:
-                r_dis = -0.5
+                r_dis = -0.05
             else:
-                r_dis = +0.05
-            if pre_distance < distance:
+                r_dis = +0.005
+
+            if x_pre > x_dis and y_pre > y_dis:
                 r_dis = +0.5
             else:
                 r_dis = -1
-            reward = r_change + r_action + r_dis + pre
+
+            reward = r_change + r_action + r_dis
         return reward, done
 
     def step(self, action):
@@ -281,7 +302,7 @@ class Env(Node):
         vel_cmd.angular.z = ang_vel
         self.velPub.publish(vel_cmd)
 
-        state= self.getState()
+        state = self.getState()
         return np.asarray(state)
 
     def reset(self):
@@ -290,6 +311,7 @@ class Env(Node):
         # SHOULD HAVE A TIMER HERE
         print("deleted")
         i = 0
+
         while (i < 10000):
             j = 0
             while (j < 10000):
@@ -303,68 +325,70 @@ class Env(Node):
         self.current_step = 0
         self.ep_done = False
         self.pre_action = None
+        self.pre_distance = HORIZONTAL_DIS
         self.rewards = 0
         self.step_count = 0
-        self.best_rewards = -10
         return state, done
 
     def timer_callback(self):  # train
-        if self.ep_done == True:
-            self.current_state, self.done = self.reset()
-        else:
-            if self.current_state is None:
-                self.current_state = self.getState()
-            self.current_step = self.current_step + 1
-            if self.current_step < self.steps and self.done == False:
-                # Select action based on epsilon-greedy
-                if random.random() < self.epsilon:
-                    # select random action
-                    action = np.random.choice([0, 1, 2])  # actions: 0=left,1=left,2=right
-                else:
-                    # select best action
-                    with torch.no_grad():
-                        action = self.policy_dqn(
-                            self.train_model.state_to_dqn_input(self.current_state)).argmax().item()
-
-                # Execute action
-                self.current_state= self.step(action)
-                reward, self.done = self.setReward(self.current_state, self.pre_action, action, self.pre_distance)
-                # Accumulate reward
-                self.rewards += reward
-                self.pre_action = action
-                self.pre_distance = self.current_state[-1]
-                # Save experience into memory
-                self.memory.append((self.current_state, action, self.current_state, reward, self.done))
-                print(self.current_step)
+        if self.current_state is None:
+            self.current_state = self.getState()
+        self.current_step = self.current_step + 1
+        if self.current_step < self.steps and self.ep_done == False:
+            # Select action based on epsilon-greedy
+            if random.random() < self.epsilon:
+                # select random action
+                action = np.random.choice([0, 1, 2])  # actions: 0=left,1=left,2=right
             else:
-                self.rewards_per_episode.append(self.rewards)
-                self.ep_done = True
-                self.current_ep += 1
-                # Graph training progress
-                if (self.current_ep != 0 and self.current_ep % 1000 == 0):
-                    print(f'Episode {self.current_ep} Epsilon {self.epsilon}')
+                # select best action
+                with torch.no_grad():
+                    action = self.policy_dqn(
+                        self.train_model.state_to_dqn_input(self.current_state)).argmax().item()
 
-                    self.train_model.plot_progress(self.rewards_per_episode, self.epsilon_history)
+            # Execute action
+            self.current_state = self.step(action)
+            reward, self.ep_done = self.setReward(self.current_state, self.pre_action, action, self.x_pre_distance, self.y_pre_distance)
+            # Accumulate reward
+            self.rewards += reward
+            self.pre_action = action
+            self.pre_distance = self.current_state[-1]
+            # Save experience into memory
+            self.memory.append((self.current_state, action, self.current_state, reward, self.done))
+            print(self.current_step)
+        else:
+            self.rewards_per_episode.append(self.rewards)
+            self.ep_done = True
+            self.current_ep += 1
+            # Graph training progress
+            if (self.current_ep != 0 and self.current_ep % 1000 == 0):
+                print(f'Episode {self.current_ep} Epsilon {self.epsilon}')
+                print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                self.train_model.plot_progress(self.rewards_per_episode, self.epsilon_history)
+            print(self.best_rewards, self.rewards)
+            # AVOID ERROR SPAWN
+            if self.rewards > -11 and self.rewards < -8:
+                self.rewards = self.pre_best
+            if self.rewards > self.best_rewards:
+                self.best_rewards = self.rewards
+                self.pre_best = self.best_rewards
+                print(f'Best rewards so far: {self.best_rewards}')
+                # Save policy
+                torch.save(self.policy_dqn.state_dict(), f"car_dql_{self.current_ep}.pt")
+            # Check if enough experience has been collected
+            if len(self.memory) > self.train_model.mini_batch_size:
+                mini_batch = self.memory.sample(self.train_model.mini_batch_size)
+                self.train_model.optimize(mini_batch, self.policy_dqn, self.target_dqn)
 
-                if self.rewards > self.best_rewards:
-                    self.best_rewards = self.rewards
-                    print(f'Best rewards so far: {self.best_rewards}')
-                    # Save policy
-                    torch.save(self.policy_dqn.state_dict(), f"car_dql_{self.current_ep}.pt")
-                # Check if enough experience has been collected
-                if len(self.memory) > self.train_model.mini_batch_size:
-                    mini_batch = self.memory.sample(self.train_model.mini_batch_size)
-                    self.train_model.optimize(mini_batch, self.policy_dqn, self.target_dqn)
+                # Decay epsilon
+                self.epsilon = max(self.epsilon - 1 / self.EPISODES, 0)
+                self.epsilon_history.append(self.epsilon)
 
-                    # Decay epsilon
-                    self.epsilon = max(self.epsilon - 1 / self.EPISODES, 0)
-                    self.epsilon_history.append(self.epsilon)
-
-                    # Copy policy network to target network after a certain number of steps
-                    if self.step_count > self.train_model.network_sync_rate:
-                        self.target_dqn.load_state_dict(self.policy_dqn.state_dict())
-                        self.step_count = 0
-                        # Close environment
+                # Copy policy network to target network after a certain number of steps
+                if self.step_count > self.train_model.network_sync_rate:
+                    self.target_dqn.load_state_dict(self.policy_dqn.state_dict())
+                    self.step_count = 0
+                    # Close environment
+            self.current_state, self.done = self.reset()
 
 
 def main(args=None):
