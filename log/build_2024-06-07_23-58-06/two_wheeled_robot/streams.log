@@ -1,0 +1,378 @@
+[0.006s] Invoking command in '/home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/botcanh/dev_ws/install/reinforcement_learning:/opt/ros/humble /home/botcanh/.local/bin/cmake /home/botcanh/dev_ws/src/two_wheeled_robot -DCMAKE_INSTALL_PREFIX=/home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot
+[0.152s] -- The C compiler identification is GNU 11.4.0
+[0.249s] -- The CXX compiler identification is GNU 11.4.0
+[0.261s] -- Detecting C compiler ABI info
+[0.306s] -- Detecting C compiler ABI info - done
+[0.314s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.314s] -- Detecting C compile features
+[0.315s] -- Detecting C compile features - done
+[0.319s] -- Detecting CXX compiler ABI info
+[0.365s] -- Detecting CXX compiler ABI info - done
+[0.371s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.371s] -- Detecting CXX compile features
+[0.372s] -- Detecting CXX compile features - done
+[0.380s] -- Found ament_cmake: 1.3.9 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.466s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.540s] -- Found rclcpp: 16.0.9 (/opt/ros/humble/share/rclcpp/cmake)
+[0.589s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.594s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.603s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.619s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.638s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.705s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.708s] -- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)
+[0.743s] -- Using RMW implementation 'rmw_cyclonedds_cpp' as default
+[0.753s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.799s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.801s] -- Found Threads: TRUE  
+[0.938s] -- Found rclpy: 3.3.13 (/opt/ros/humble/share/rclpy/cmake)
+[0.994s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.089s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.089s] -- Configured cppcheck include dirs: 
+[1.089s] -- Configured cppcheck exclude dirs and/or files: 
+[1.092s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.098s] -- Added test 'lint_cmake' to check CMake code style
+[1.101s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.123s] -- Added test 'uncrustify' to check C / C++ code style
+[1.123s] -- Configured uncrustify additional arguments: 
+[1.126s] -- Added test 'xmllint' to check XML markup files
+[1.127s] -- Configuring done
+[1.131s] -- Generating done
+[1.132s] -- Build files have been written to: /home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot
+[1.141s] Invoked command in '/home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/botcanh/dev_ws/install/reinforcement_learning:/opt/ros/humble /home/botcanh/.local/bin/cmake /home/botcanh/dev_ws/src/two_wheeled_robot -DCMAKE_INSTALL_PREFIX=/home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot
+[1.141s] Invoking command in '/home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/botcanh/dev_ws/install/reinforcement_learning:/opt/ros/humble /home/botcanh/.local/bin/cmake --build /home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot -- -j12 -l12
+[1.181s] Built target ament_cmake_python_copy_two_wheeled_robot
+[1.369s] running egg_info
+[1.369s] creating two_wheeled_robot.egg-info
+[1.369s] writing two_wheeled_robot.egg-info/PKG-INFO
+[1.369s] writing dependency_links to two_wheeled_robot.egg-info/dependency_links.txt
+[1.369s] writing top-level names to two_wheeled_robot.egg-info/top_level.txt
+[1.369s] writing manifest file 'two_wheeled_robot.egg-info/SOURCES.txt'
+[1.371s] reading manifest file 'two_wheeled_robot.egg-info/SOURCES.txt'
+[1.371s] writing manifest file 'two_wheeled_robot.egg-info/SOURCES.txt'
+[1.385s] Built target ament_cmake_python_build_two_wheeled_robot_egg
+[1.391s] Invoked command in '/home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/botcanh/dev_ws/install/reinforcement_learning:/opt/ros/humble /home/botcanh/.local/bin/cmake --build /home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot -- -j12 -l12
+[1.447s] Invoking command in '/home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/botcanh/dev_ws/install/reinforcement_learning:/opt/ros/humble /home/botcanh/.local/bin/cmake --install /home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot
+[1.465s] -- Install configuration: ""
+[1.466s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/config
+[1.466s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/include
+[1.466s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/include/two_wheeled_robot
+[1.466s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/launch
+[1.466s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/launch/launch_urdf_into_gazebo.launch.py
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/launch/test.launch.py
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/maps
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/meshes
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/meshes/robot_base.stl
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/model.sdf
+[1.467s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/model.config
+[1.468s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/materials
+[1.468s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/materials/textures
+[1.468s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/materials/textures/aws_robomaker_warehouse_ClutteringC_01.png
+[1.469s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/materials/textures/aws_robomaker_warehouse_ClutteringC_02.png
+[1.470s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/meshes
+[1.470s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/meshes/aws_robomaker_warehouse_ClutteringC_01_visual.DAE
+[1.470s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringC_01/meshes/aws_robomaker_warehouse_ClutteringC_01_collision.DAE
+[1.471s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01
+[1.471s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/model.sdf
+[1.471s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/model.config
+[1.471s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/materials
+[1.471s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/materials/textures
+[1.471s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/materials/textures/aws_robomaker_warehouse_TrashCanC_01.png
+[1.472s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/meshes
+[1.472s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/meshes/aws_robomaker_warehouse_TrashCanC_01_visual.DAE
+[1.473s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_TrashCanC_01/meshes/aws_robomaker_warehouse_TrashCanC_01_collision.DAE
+[1.474s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01
+[1.474s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/model.sdf
+[1.474s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/model.config
+[1.474s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/materials
+[1.474s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/materials/textures
+[1.475s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/materials/textures/aws_robomaker_warehouse_RoofB_01.png
+[1.475s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/meshes
+[1.475s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/meshes/aws_robomaker_warehouse_RoofB_01_collision.DAE
+[1.475s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_RoofB_01/meshes/aws_robomaker_warehouse_RoofB_01_visual.DAE
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/model.sdf
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/.DS_Store
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/model.config
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/materials
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/materials/.DS_Store
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/materials/textures
+[1.477s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/materials/textures/aws_robomaker_warehouse_PalletJackB_01.png
+[1.479s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/materials/textures/aws_robomaker_warehouse_PalletJackB_02.png
+[1.480s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/meshes
+[1.480s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/meshes/aws_robomaker_warehouse_PalletJackB_01_visual.DAE
+[1.482s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_PalletJackB_01/meshes/aws_robomaker_warehouse_PalletJackB_01_collision.DAE
+[1.482s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01
+[1.482s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/model.sdf
+[1.483s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/model.config
+[1.483s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/materials
+[1.483s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/materials/textures
+[1.483s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/materials/textures/aws_robomaker_warehouse_Lamp_01.png
+[1.483s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/meshes
+[1.483s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/meshes/aws_robomaker_warehouse_Lamp_01_collision.DAE
+[1.483s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Lamp_01/meshes/aws_robomaker_warehouse_Lamp_01_visual.DAE
+[1.484s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01
+[1.484s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/model.sdf
+[1.484s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/model.config
+[1.484s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/materials
+[1.484s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/materials/textures
+[1.484s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/materials/textures/aws_robomaker_warehouse_ClutteringD_01.png
+[1.485s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/materials/textures/aws_robomaker_warehouse_ClutteringD_02.png
+[1.486s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/meshes
+[1.486s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/meshes/aws_robomaker_warehouse_ClutteringD_01_visual.DAE
+[1.487s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringD_01/meshes/aws_robomaker_warehouse_ClutteringD_01_collision.DAE
+[1.487s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01
+[1.487s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/model.sdf
+[1.487s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/model.config
+[1.487s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/materials
+[1.487s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/materials/textures
+[1.487s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/materials/textures/aws_robomaker_warehouse_WallB_01.png
+[1.489s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/meshes
+[1.489s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/meshes/aws_robomaker_warehouse_WallB_01_collision.DAE
+[1.489s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_WallB_01/meshes/aws_robomaker_warehouse_WallB_01_visual.DAE
+[1.489s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell
+[1.489s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/model.sdf
+[1.490s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/model.config
+[1.490s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials
+[1.490s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures
+[1.491s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Stairs.png
+[1.494s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Wall_Concrete.png
+[1.496s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Wall_Corrugated.png
+[1.497s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/PalletWrap.png
+[1.498s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Mesh.png
+[1.499s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/WorkCell_Render.png
+[1.504s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/ControlPanel.png
+[1.505s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Floor.png
+[1.507s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/RubberMat.png
+[1.507s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Door_Window.png
+[1.509s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Pallet.png
+[1.510s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/CardboardBoxes.png
+[1.511s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Shelves.png
+[1.512s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Pillar.png
+[1.515s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Yellow.png
+[1.515s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Plywood.png
+[1.516s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Bin.png
+[1.517s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/Conveyor.png
+[1.519s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/materials/textures/RollupDoor.png
+[1.521s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/meshes
+[1.521s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/meshes/mesh.dae
+[1.526s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell/meshes/mesh_backup.dae
+[1.530s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01
+[1.530s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/model.sdf
+[1.530s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/model.config
+[1.531s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/materials
+[1.531s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/materials/textures
+[1.531s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/materials/textures/aws_robomaker_warehouse_ShelfD_04.png
+[1.532s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/materials/textures/aws_robomaker_warehouse_ShelfD_01.png
+[1.532s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/materials/textures/aws_robomaker_warehouse_ShelfD_02.png
+[1.533s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/materials/textures/aws_robomaker_warehouse_ShelfD_03.png
+[1.534s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/meshes
+[1.534s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/meshes/aws_robomaker_warehouse_ShelfD_01_collision.DAE
+[1.534s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfD_01/meshes/aws_robomaker_warehouse_ShelfD_01_visual.DAE
+[1.535s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01
+[1.535s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/model.sdf
+[1.535s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/.DS_Store
+[1.535s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/model.config
+[1.535s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/materials
+[1.536s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/materials/.DS_Store
+[1.536s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/materials/textures
+[1.536s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/materials/textures/aws_robomaker_warehouse_ShelfE_01.png
+[1.536s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/materials/textures/aws_robomaker_warehouse_ShelfE_02.png
+[1.537s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/materials/textures/aws_robomaker_warehouse_ShelfE_04.png
+[1.538s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/materials/textures/aws_robomaker_warehouse_ShelfE_03.png
+[1.539s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/meshes
+[1.539s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/meshes/aws_robomaker_warehouse_ShelfE_01_visual.DAE
+[1.540s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfE_01/meshes/aws_robomaker_warehouse_ShelfE_01_collision.DAE
+[1.540s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01
+[1.540s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/model.sdf
+[1.540s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/model.config
+[1.541s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/materials
+[1.541s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/materials/textures
+[1.541s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/materials/textures/aws_robomaker_warehouse_GroundB_01.png
+[1.544s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/materials/textures/aws_robomaker_warehouse_GroundB_02.png
+[1.545s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/meshes
+[1.545s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/meshes/aws_robomaker_warehouse_GroundB_01_collision.DAE
+[1.545s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_GroundB_01/meshes/aws_robomaker_warehouse_GroundB_01_visual.DAE
+[1.545s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01
+[1.545s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/model.sdf
+[1.545s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/.DS_Store
+[1.546s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/model.config
+[1.546s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/materials
+[1.546s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/materials/.DS_Store
+[1.546s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/materials/textures
+[1.546s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/materials/textures/aws_robomaker_warehouse_Bucket_01.png
+[1.547s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/meshes
+[1.547s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/meshes/aws_robomaker_warehouse_Bucket_01_visual.DAE
+[1.547s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_Bucket_01/meshes/aws_robomaker_warehouse_Bucket_01_collision.DAE
+[1.548s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01
+[1.548s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/model.sdf
+[1.548s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/model.config
+[1.548s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/materials
+[1.548s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/materials/textures
+[1.548s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/materials/textures/aws_robomaker_warehouse_ShelfF_03.png
+[1.549s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/materials/textures/aws_robomaker_warehouse_ShelfF_01.png
+[1.550s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/materials/textures/aws_robomaker_warehouse_ShelfF_02.png
+[1.550s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/meshes
+[1.550s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/meshes/aws_robomaker_warehouse_ShelfF_01_visual.DAE
+[1.552s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ShelfF_01/meshes/aws_robomaker_warehouse_ShelfF_01_collision.DAE
+[1.553s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing
+[1.553s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/model.sdf
+[1.553s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/model.config
+[1.553s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials
+[1.553s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures
+[1.553s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/tshirt02_normals.png
+[1.555s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/tshirt02_texture.png
+[1.555s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/jeans01_normals.png
+[1.563s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/male02_diffuse_black.png
+[1.570s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/male02_diffuse_black-unmodified.png
+[1.578s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/eyebrow001.png
+[1.579s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/green_eye.png
+[1.581s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/eyebrow001-unmodified.png
+[1.582s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/young_lightskinned_male_diffuse.png
+[1.590s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/jeans_basic_diffuse.png
+[1.598s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/materials/textures/teeth.png
+[1.602s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/meshes
+[1.602s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/person_standing/meshes/standing.dae
+[1.612s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01
+[1.612s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/model.sdf
+[1.613s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/.DS_Store
+[1.613s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/model.config
+[1.613s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/materials
+[1.613s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/materials/.DS_Store
+[1.613s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/materials/textures
+[1.613s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/materials/textures/aws_robomaker_warehouse_ClutteringA_03.png
+[1.614s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/materials/textures/.DS_Store
+[1.615s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/materials/textures/aws_robomaker_warehouse_ClutteringA_02.png
+[1.616s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/materials/textures/aws_robomaker_warehouse_ClutteringA_01.png
+[1.617s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/meshes
+[1.617s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/meshes/aws_robomaker_warehouse_ClutteringA_01_visual.DAE
+[1.617s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_ClutteringA_01/meshes/aws_robomaker_warehouse_ClutteringA_01_collision.DAE
+[1.618s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid
+[1.618s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/model.sdf
+[1.618s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/model.config
+[1.618s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/materials
+[1.618s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/materials/textures
+[1.618s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/materials/textures/Hybrid.png
+[1.619s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/materials/textures/Hybrid_Interior.png
+[1.621s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/materials/textures/Wheels3.png
+[1.622s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/meshes
+[1.622s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/meshes/Hybrid.obj
+[1.623s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/prius_hybrid/meshes/Hybrid.mtl
+[1.624s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus
+[1.624s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/model.sdf
+[1.624s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/model.config
+[1.624s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/materials
+[1.624s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/materials/textures
+[1.624s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/materials/textures/bus.png
+[1.625s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/meshes
+[1.625s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/meshes/bus.mtl
+[1.625s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/bus/meshes/bus.obj
+[1.626s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv
+[1.626s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/model.sdf
+[1.626s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/model.config
+[1.627s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/materials
+[1.627s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/materials/textures
+[1.627s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/materials/textures/suv.png
+[1.629s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/materials/textures/wheels_01.png
+[1.631s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/meshes
+[1.631s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/meshes/suv.mtl
+[1.631s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/suv/meshes/suv.obj
+[1.632s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox
+[1.632s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/model.sdf
+[1.632s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/model.config
+[1.632s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/materials
+[1.632s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/materials/textures
+[1.632s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/materials/textures/postbox_spec.jpg
+[1.633s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/materials/textures/postbox_diffuse.jpg
+[1.634s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/meshes
+[1.634s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/postbox/meshes/postbox.dae
+[1.635s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01
+[1.635s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/model.sdf
+[1.635s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/model.config
+[1.635s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials
+[1.635s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials/.DS_Store
+[1.635s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials/textures
+[1.635s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials/textures/aws_robomaker_warehouse_DeskC_04.png
+[1.636s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials/textures/aws_robomaker_warehouse_DeskC_03.psd
+[1.641s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials/textures/aws_robomaker_warehouse_DeskC_03.png
+[1.642s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials/textures/aws_robomaker_warehouse_DeskC_02.png
+[1.643s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/materials/textures/aws_robomaker_warehouse_DeskC_01.png
+[1.645s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/meshes
+[1.645s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/meshes/aws_robomaker_warehouse_DeskC_01_collision.DAE
+[1.645s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/aws_robomaker_warehouse_DeskC_01/meshes/aws_robomaker_warehouse_DeskC_01_visual.DAE
+[1.646s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin
+[1.646s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin/model.sdf
+[1.646s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin/model.config
+[1.646s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin/materials
+[1.646s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin/materials/textures
+[1.646s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin/materials/textures/bin.png
+[1.647s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin/meshes
+[1.647s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/workcell_bin/meshes/bin.dae
+[1.648s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign
+[1.648s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/model.sdf
+[1.648s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/model.config
+[1.648s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/materials
+[1.648s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/materials/textures
+[1.649s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/materials/textures/StopSign_Spec.png
+[1.650s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/materials/textures/StopSign_Diffuse.png
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/materials/scripts
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/materials/scripts/stopsign.material
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/meshes
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/meshes/stop_sign.dae
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/model-1_3.sdf
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/models/stop_sign/model-1_4.sdf
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/params
+[1.651s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/rviz
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/rviz/rviz_basic_settings.rviz
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/env.py
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/sample..py
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/model5.py
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/__pycache__
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/__pycache__/env.cpython-310.pyc
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/__pycache__/model5.cpython-310.pyc
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/run.py
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/image_node.py
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/src
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/two_wheeled_robot
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/two_wheeled_robot/__init__.py
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/urdf
+[1.652s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/urdf/two_wheeled_robot.urdf
+[1.653s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/urdf/two_wheeled_robot_copy.urdf
+[1.653s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/worlds
+[1.653s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/worlds/yolo_test.world
+[1.653s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/worlds/no_roof_small_warehouse.world
+[1.654s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/worlds/warehouse.world
+[1.654s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/worlds/small_warehouse.world
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/environment/pythonpath.sh
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/environment/pythonpath.dsv
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot-1.0.0-py3.10.egg-info
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot-1.0.0-py3.10.egg-info/SOURCES.txt
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot-1.0.0-py3.10.egg-info/top_level.txt
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot-1.0.0-py3.10.egg-info/PKG-INFO
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot-1.0.0-py3.10.egg-info/dependency_links.txt
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot
+[1.655s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot/__init__.py
+[1.676s] Listing '/home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot'...
+[1.676s] Compiling '/home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/local/lib/python3.10/dist-packages/two_wheeled_robot/__init__.py'...
+[1.679s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/lib/two_wheeled_robot/image_node.py
+[1.679s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/lib/two_wheeled_robot/env.py
+[1.679s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/lib/two_wheeled_robot/model5.py
+[1.679s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/ament_index/resource_index/package_run_dependencies/two_wheeled_robot
+[1.679s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/ament_index/resource_index/parent_prefix_path/two_wheeled_robot
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/environment/ament_prefix_path.sh
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/environment/ament_prefix_path.dsv
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/environment/path.sh
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/environment/path.dsv
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/local_setup.bash
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/local_setup.sh
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/local_setup.zsh
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/local_setup.dsv
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/package.dsv
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/ament_index/resource_index/packages/two_wheeled_robot
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/cmake/two_wheeled_robotConfig.cmake
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/cmake/two_wheeled_robotConfig-version.cmake
+[1.680s] -- Installing: /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/package.xml
+[1.684s] Invoked command in '/home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/botcanh/dev_ws/install/reinforcement_learning:/opt/ros/humble /home/botcanh/.local/bin/cmake --install /home/botcanh/dev_ws/src/two_wheeled_robot/build/two_wheeled_robot
