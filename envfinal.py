@@ -75,6 +75,7 @@ class Env(Node):
         self.range = np.array([], dtype=float)
 
         self.done = False  # done episode or not
+        self.goal_catch = False
         self.EPISODES = 100
         self.steps = 1000
         self.current_step = 0
@@ -279,6 +280,7 @@ class Env(Node):
         if distance <= GOAL_THRESHOLD1:
             reward += 1000
             done = True
+            self.goal_catch = True
             '''
             if pre_action == None and pre_distance == None:
                 pre = 0
@@ -356,12 +358,10 @@ class Env(Node):
         print("respawned")
         state = self.getState()
         done = False
-        self.current_step = 0
         self.ep_done = False
         self.pre_action = None
         self.pre_distance = HORIZONTAL_DIS
         self.rewards = 0
-        self.step_count = 0
         self.threshold_done4 = False
         self.threshold_done3 = False
         self.threshold_done2 = False
@@ -395,6 +395,7 @@ class Env(Node):
             # Save experience into memory
             self.memory.append((self.current_state, action, self.new_state, reward, self.done))
             self.current_state = self.new_state
+            self.step_count = +1
             print(self.current_step)
         else:
             self.rewards_per_episode.append(self.rewards)
