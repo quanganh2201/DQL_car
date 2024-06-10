@@ -8,6 +8,7 @@ from torch import nn
 import torch.nn.functional as F
 
 
+
 # Define model
 class DeepQNetwork(nn.Module):
     def __init__(self, input_dims, fc1_dims, fc2_dims,
@@ -17,7 +18,7 @@ class DeepQNetwork(nn.Module):
         self.fc1_dims = fc1_dims
         self.fc2_dims = fc2_dims
         self.n_actions = n_actions
-        self.fc1 = nn.Linear(*self.input_dims, self.fc1_dims)
+        self.fc1 = nn.Linear(self.input_dims, self.fc1_dims)
         self.fc2 = nn.Linear(self.fc1_dims, self.fc2_dims)
         self.fc3 = nn.Linear(self.fc2_dims, self.n_actions)
 
@@ -49,10 +50,10 @@ class ReplayMemory():
 # Deep Q-Learning
 class CarDQL():
     # Hyperparameters (adjustable)
-    learning_rate_a = 0.005  # learning rate (alpha)
+    learning_rate_a = 0.001  # learning rate (alpha)
     discount_factor_g = 0.95  # discount rate (gamma)
-    network_sync_rate = 50000  # number of steps the agent takes before syncing the policy and target network
-    replay_memory_size = 100000  # size of replay memory
+    network_sync_rate = 2500  # number of steps the agent takes before syncing the policy and target network
+    replay_memory_size = 50000  # size of replay memory
     mini_batch_size = 64  # size of the training data set sampled from the replay memory
 
 
@@ -64,7 +65,7 @@ class CarDQL():
     def train(self, episodes, steps):
         # Create instance
         env = Env()
-        num_states = 3 # expecting 2: position & velocity
+        num_states = 6 # expecting 2: position & velocity
         num_actions = 3
 
         epsilon = 1  # 1 = 100% random actions
@@ -218,50 +219,12 @@ class CarDQL():
         self.optimizer.step()
 
     def state_to_dqn_input(self, state) -> torch.Tensor:
-        state_x = np.digitize(state[0])
-        state_y = np.digitize(state[1])
-        state_dis = np.digitize(state[2])
-        return torch.FloatTensor([state_x, state_y, state_dis])
-
-    # Run the environment with the learned policy
-    def test(self, episodes,steps, model_filepath):
-        # Create FrozenLake instance
-        env = Env()
-        num_states = 3
-        num_actions = 3
-
-        # Load learned policy
-        policy_dqn = DeepQNetwork(input_dims=num_states, fc1_dims=64, fc2_dims=64, n_actions=num_actions)
-        policy_dqn.load_state_dict(torch.load(model_filepath))
-        policy_dqn.eval()  # switch model to evaluation mode
-
-        for i in range(episodes):
-            state = env.reset()
-            done = False
-            score = 0
-            pre_action = None
-            for t in range(steps):
-                # Select best action
-                with torch.no_grad():
-                    action = policy_dqn(self.state_to_dqn_input(state)).argmax().item()
-
-                # Execute action
-                reward = env.setReward(state, pre_action, action)  # nhận reward
-                next_state, done = env.step(action)  # chọn giá trị mới theo step
-                pre_action = action
-                score = +reward
-                state = next_state
-                if t % 5 == 0:
-                    print("episodes: %d; score %d; step: %d", i, score, t)
-                if t == 99  or score <= -30 or score >= 30:
-                    done = True
-                    print("episodes: %d done; total_score %d; total_step: %d", i, score, t)
-                    break
-
-        quit()
-
-
-if __name__ == '__main__':
-    carDQL = CarDQL()
-    carDQL.train(20000, 100)
-    #carDQL.test(10,100, "ghi_duong_dan_file_vo")
+        dis_1 = state[0]
+        dis_2 = state[1]
+        dis_3 = state[2]
+        dis_4 = state[3]
+        dis_5 = state[4]
+        state_x_distacne = state[5]
+        state_y_distacne = state[6]
+        distance = state[7]
+        return torch.FloatTensor([dis_1, dis_2,dis_3,dis_4,dis_5, state_x_distacne , state_y_distacne, distance])
