@@ -89,6 +89,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     "/home/botcanh/dev_ws/src/two_wheeled_robot/scripts/image_node.py"
     "/home/botcanh/dev_ws/src/two_wheeled_robot/scripts/env.py"
     "/home/botcanh/dev_ws/src/two_wheeled_robot/scripts/model5.py"
+    "/home/botcanh/dev_ws/src/two_wheeled_robot/scripts/run.py"
     )
 endif()
 

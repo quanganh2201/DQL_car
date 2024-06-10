@@ -182,76 +182,95 @@
     <pose frame=''>13.29 -0.67 0 0 0 0.0</pose>
     </model>
 
-    <model name = 'SUV'>
+    <model name = 'person14'>
     <include>
-      <name>suv</name>
-      <uri>model://suv</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>8 7 0 0 0 -1.57</pose>
-    </include> 
+    </include>
+    <pose frame=''>3.97 2.95 0 0 0 0.0</pose>
     </model>
 
-    <model name = 'SUV2'>
+    <model name = 'person15'>
     <include>
-      <name>suv</name>
-      <uri>model://suv</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>4.7 -9.4 0 0 0 1.57</pose>
-    </include> 
+    </include>
+    <pose frame=''>6.5 7.0 0 0 0 1.57</pose>
     </model>
 
-    <model name = 'SUV3'>
+    <model name = 'person16'>
     <include>
-      <name>suv</name>
-      <uri>model://suv</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>-8.25 -9.25 0 0 0 0</pose>
-    </include> 
+    </include>
+    <pose frame=''>6.1 1.8 0 0 0 3.0</pose>
     </model>
 
-    <model name = 'stop sign'>
+    <model name = 'person17'>
     <include>
-      <name>stop_sign</name>
-      <uri>model://stop_sign</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>7.2 -2 0 0 0 -1.61</pose>
-    </include>  
+    </include>
+    <pose frame=''>9.96 6.8 0 0 0 0.0</pose>
     </model>
 
-    <model name = 'stop sign 1'>
+    <model name = 'person18'>
     <include>
-      <name>stop_sign</name>
-      <uri>model://stop_sign</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>1.23 -3 0 0 0 0.0</pose>
-    </include>  
+    </include>
+    <pose frame=''>1.8 3.08 0 0 0 -3.0</pose>
     </model>
 
-    <model name = 'stop sign 2'>
+
+    <model name = 'person19'>
     <include>
-      <name>stop_sign</name>
-      <uri>model://stop_sign</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>8.6 2.3 0 0 0 1.61</pose>
-    </include>  
+    </include>
+    <pose frame=''>3.97 -2.95 0 0 0 0.0</pose>
     </model>
 
-    <model name = 'post box'>
+    <model name = 'person20'>
     <include>
-      <name>postbox</name>
-      <uri>model://postbox</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>3.5 -7 0 0 0 -3.1</pose>
-    </include> 
+    </include>
+    <pose frame=''>6.5 -7.0 0 0 0 1.57</pose>
     </model>
 
-    <model name = 'post box 1'>
+    <model name = 'person21'>
     <include>
-      <name>postbox</name>
-      <uri>model://postbox</uri>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
       <static>true</static>
-      <pose>-8.25 -9.25 0 0 0 -3.1</pose>
-    </include> 
+    </include>
+    <pose frame=''>6.1 -1.8 0 0 0 3.0</pose>
+    </model>
+
+    <model name = 'person22'>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+    </include>
+    <pose frame=''>9.96 -6.8 0 0 0 0.0</pose>
+    </model>
+
+    <model name = 'person23'>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+    </include>
+    <pose frame=''>1.8 -3.08 0 0 0 -3.0</pose>
     </model>
 
   </world>

@@ -26,7 +26,7 @@ class ImageSubscriber(Node):
         self.bridge = CvBridge()
         self.out = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc(*'XVID'), 20.0, (640, 480))
         self.img_pub = self.create_publisher(Image, "/inference_result", 1)
-        self.velPub = self.create_publisher(Twist, '/cmd_vel', 10)
+        #self.velPub = self.create_publisher(Twist, '/cmd_vel', 10)
 
         self.turnLeft = False
         self.turnRight = False
@@ -44,65 +44,66 @@ class ImageSubscriber(Node):
         self.view_depth = np.array(self.view_depth, dtype=np.float32)
         #alpha: contrast 0 -127, beta: brightness 0 -100
         self.depth_img = cv2.convertScaleAbs(self.view_depth, alpha=10 , beta=30)
-        cv2.imshow('view', self.depth_img)
+        #cv2.imshow('view', self.depth_img)
         #cv2.imshow('view0', self.view_depth)
 
     def image_callback(self, msg):
+        self.posX = np.array([], dtype=int)
+        self.posY = np.array([], dtype=int)
+        self.range = np.array([], dtype=float)
+
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         results = self.model(cv_image)
-        print(cv_image.size)
+        # print(cv_image.size)
         height, width, _ = cv_image.shape
-        img_center_x = cv_image.shape[0] // 2
+        self.img_center_x = cv_image.shape[0] // 2
         img_center_y = cv_image.shape[1] // 2
-        
-        # Get the 60x60 window around the center
-        start_x = max(0, img_center_x - 80)
-        end_x = min(cv_image.shape[0], img_center_x + 80)
-        start_y = max(0, img_center_y - 80)
-        end_y = min(cv_image.shape[1], img_center_y + 80)
 
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                b = box.xyxy[0].to('cpu').detach().numpy().copy()  # get box coordinates in (top, left, bottom, right) format
-                c = box.cls
-                top = int(b[0])
-                left = int(b[1])
-                bottom = int(b[2])
-                right = int(b[3])
+        depth = 10
+        if len(results) > 0:
+            for r in results:
+                boxes = r.boxes
+                for box in boxes:
+                    b = box.xyxy[0].to(
+                        'cpu').detach().numpy().copy()  # get box coordinates in (top, left, bottom, right) format
+                    c = box.cls
+                    top = int(b[0])
+                    left = int(b[1])
+                    bottom = int(b[2])
+                    right = int(b[3])
 
-                center_y = (left + right) // 2
-                center_x = (top + bottom) // 2
-                depth = 10
+                    center_y = (left + right) // 2
+                    center_x = (top + bottom) // 2
 
-                # Draw the center point
-                cv2.circle(cv_image, (center_x, center_y), radius=5, color=(255, 255, 0), thickness=-1)
-                if self.view_depth is None:
-                    pass
-                else:
-                    depth = self.view_depth[center_y, center_x]
-                    cv2.putText(cv_image, f"{depth :.2f}m", (center_x + 5, center_y + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-
-                for temp_x in range(start_x, end_x):
-                    if top < temp_x and bottom > temp_x and depth <= 3:
-                        if center_x > img_center_x:
-                            self.turnLeft = True
-                            print("left")
-                            break
-                        elif center_x < img_center_x and depth <= 3:
-                            self.turnRight = True
-                            print("right")
-                            break
+                    # Draw the center point
+                    cv2.circle(cv_image, (center_x, center_y), radius=5, color=(255, 255, 0), thickness=-1)
+                    if self.view_depth is None:
+                        pass
                     else:
-                        self.turnLeft = False
-                        self.turnRight = False
+                        # find the closest point within the box
+                        for y in range(left, right):
+                            for x in range(top, bottom):
+                                temp = self.view_depth[y, x]
+                                if temp < depth:
+                                    depth = temp
+                        depth = self.view_depth[center_y, center_x]
+                        cv2.putText(cv_image, f"{depth :.2f}m", (center_x + 5, center_y + 5), cv2.FONT_HERSHEY_SIMPLEX,
+                                    0.5,
+                                    (255, 255, 255), 2)
+                        #self.posX = np.append(self.posX, center_x)
+                        #self.posY = np.append(self.posY, center_y)
+                        #self.range = np.append(self.range, depth)
+        #else:
+            #self.posX = np.append(self.posX, self.img_center_x)
+            #self.posY = np.append(self.posY, img_center_y)
+            #self.range = np.append(self.range, depth)
 
-        annotated_frame = results[0].plot(labels = True)
-        img_msg = self.bridge.cv2_to_imgmsg(annotated_frame)  
+        annotated_frame = results[0].plot(labels=True)
+        img_msg = self.bridge.cv2_to_imgmsg(annotated_frame)
         self.img_pub.publish(img_msg)
-        self.out.write(cv_image)
 
     def timer_callback(self):
+        '''
         velMsg =Twist()
         velMsg.linear.x = 0.3
         velMsg.linear.y = 0.0
@@ -113,8 +114,8 @@ class ImageSubscriber(Node):
             velMsg.angular.z = -0.3
         if self.turnRight == True:
             velMsg.angular.z = 0.3
+        '''
         #self.velPub.publish(velMsg)
-        cv2.waitKey(1) 
 
 def main(args=None):
     rclpy.init(args=args)

@@ -27,6 +27,7 @@ install(PROGRAMS
   scripts/image_node.py
   scripts/env.py
   scripts/model5.py
+  scripts/run.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

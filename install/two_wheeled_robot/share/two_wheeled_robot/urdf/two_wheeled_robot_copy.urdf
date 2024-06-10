@@ -17,7 +17,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.70 0.39 0.20"/>
+        <box size="0.35 0.195 0.10"/>
       </geometry>
       <material name="Red">
         <color rgba="1.0 0.0 0.0 1.0"/>
@@ -27,13 +27,13 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.70 0.39 0.20"/>
+        <box size="0.35 0.195 0.10"/>
       </geometry>
     </collision>
  
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="15.0"/>
+      <mass value="7.5"/>
       <inertia ixx="0.6043333333333334" ixy="0.0" ixz="0.0" iyy="0.6043333333333334" iyz="0.0" izz="2.2875"/>
     </inertial>
   </link>
@@ -61,7 +61,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="1.5707963267949 0 0"/>
       <geometry>
-        <cylinder radius="0.14" length="0.06"/>
+        <cylinder radius="0.07" length="0.03"/>
       </geometry>
       <material name="Gray">
         <color rgba="0.5 0.5 0.5 1.0"/>
@@ -71,7 +71,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="1.5707963267949 0 0"/>
       <geometry>
-        <cylinder radius="0.14" length="0.06"/>
+        <cylinder radius="0.07" length="0.03"/>
       </geometry>
     </collision>
  
@@ -85,7 +85,7 @@
   <joint name="drivewhl_l_joint" type="continuous">
     <parent link="base_link"/>
     <child link="drivewhl_l_link"/>
-    <origin xyz="-0.221 0.215 -0.05" rpy="0 0 0"/>
+    <origin xyz="-0.09 0.111 -0.05" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
   </joint>
  
@@ -93,7 +93,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="1.5707963267949 0 0"/>
       <geometry>
-        <cylinder radius="0.14" length="0.06"/>
+        <cylinder radius="0.07" length="0.03"/>
       </geometry>
       <material name="Gray">
         <color rgba="0.5 0.5 0.5 1.0"/>
@@ -103,7 +103,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="1.5707963267949 0 0"/>
       <geometry>
-        <cylinder radius="0.14" length="0.06"/>
+        <cylinder radius="0.07" length="0.03"/>
       </geometry>
     </collision>
  
@@ -117,7 +117,7 @@
   <joint name="drivewhl_r_joint" type="continuous">
     <parent link="base_link"/>
     <child link="drivewhl_r_link"/>
-    <origin xyz="-0.221 -0.215 -0.05" rpy="0 0 0"/>
+    <origin xyz="-0.09 -0.111 -0.05" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
   </joint>
  
@@ -125,7 +125,7 @@
   <link name="front_caster">
     <visual>
       <geometry>
-        <sphere radius="0.065"/>
+        <sphere radius="0.0325"/>
       </geometry>
       <material name="Cyan">
         <color rgba="0 1.0 1.0 1.0"/>
@@ -135,7 +135,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.065"/>
+        <sphere radius="0.0325"/>
       </geometry>
     </collision>
  
@@ -154,11 +154,11 @@
   <joint name="caster_joint" type="fixed">
     <parent link="base_link"/>
     <child link="front_caster"/>
-    <origin xyz="0.217 0.0 -0.1" rpy="0 0 0"/>
+    <origin xyz="0.1 0.0 -0.1" rpy="0 0 0"/>
   </joint>
  
   <!-- *********************** IMU SETUP *********************************  -->
-  <link name="imu_link">
+  <!-- link name="imu_link">
     <visual>
       <geometry>
         <box size="0.1 0.1 0.1"/>
@@ -253,10 +253,10 @@
         </linear_acceleration>
       </imu>
     </sensor>
-  </gazebo>
+  </gazebo -->
 
   <!-- *********************** LIDAR SETUP **********************************  -->
- <link name="lidar_link">
+ <!-- link name="lidar_link">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.125"/>
@@ -322,7 +322,7 @@
     <mu1>0.01</mu1>
     <mu2>0.01</mu2>
     <material>Gazebo/Black</material>
-  </gazebo>
+  </gazebo -->
 
 <!-- *********************** DEPTH CAMERA ******************************  -->
 <!-- The depth camera (e.g. Intel Realsense camera). -->
@@ -338,7 +338,7 @@
 <joint name="camera_joint" type="fixed">
     <parent link="front_caster"/>
     <child link="camera_link"/>
-    <origin xyz="0.305 0 0.08" rpy="0 0 0"/>
+    <origin xyz="0.08 0 0.15" rpy="0 0 0"/>
 </joint>
 
 <joint name="camera_optical_joint" type="fixed">
@@ -393,8 +393,8 @@
       <right_joint>drivewhl_r_joint</right_joint>
  
       <!-- kinematics -->
-      <wheel_separation>0.52</wheel_separation>
-      <wheel_diameter>0.28</wheel_diameter>
+      <wheel_separation>0.195</wheel_separation>
+      <wheel_diameter>0.07</wheel_diameter>
  
       <!-- limits -->
       <max_wheel_torque>20</max_wheel_torque>

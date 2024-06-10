@@ -56,6 +56,7 @@ class ImageSubscriber(Node):
         results = self.model(cv_image)
         # print(cv_image.size)
         height, width, _ = cv_image.shape
+        range = width
         self.img_center_x = cv_image.shape[0] // 2
         img_center_y = cv_image.shape[1] // 2
 
