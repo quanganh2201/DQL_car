@@ -217,7 +217,6 @@ class CarDQL():
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
     def state_to_dqn_input(self, state) -> torch.Tensor:
         dis_1 = state[0]
         dis_2 = state[1]
