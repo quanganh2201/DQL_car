@@ -25,6 +25,8 @@ import cv2
 import model5
 import torch
 
+import matplotlib.pyplot as plt
+import threading
 import sys
 
 MIN_DISTANCE = 0.8
@@ -121,6 +123,10 @@ class Env(Node):
 
         timer_period = 0.15
         self.timer = self.create_timer(timer_period, self.timer_callback)
+
+        #PLOTTING PARAMETERS AND FUNCTIONS
+        self.fig, self.axes = plt.subplots(2, 1)
+        self.lock = threading.Lock()
 
     # FOR SPAWNING MODEL IN GAZEBO
     def delete_entity(self, name):
@@ -347,6 +353,14 @@ class Env(Node):
         self.view_depth_range = 10 * np.ones([5], dtype=float)
         return state, done
 
+    #PLOTTING FUNCTIONS
+    def plot_progress(self):
+        self.axes[0].clear()
+        self.axes[0].plot(self.rewards_per_episode)
+        self.axes[1].clear()
+        self.axes[1].plot(self.epsilon_history)
+        plt.pause(0.01)
+
     def timer_callback(self):  # train
         if self.current_state is None:
             self.current_state = self.getState()
@@ -386,6 +400,8 @@ class Env(Node):
             if (self.current_ep != 0):
                 print(f'Episode {self.current_ep} Epsilon {self.epsilon}')
                 print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                with self.lock:
+                    self.plot_progress()
                 # self.train_model.plot_progress(self.rewards_per_episode, self.epsilon_history)
             print(self.best_rewards, self.rewards)
             # AVOID ERROR SPAWN
