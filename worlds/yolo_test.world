@@ -227,5 +227,51 @@
     <pose frame=''>1.8 3.08 0 0 0 -3.0</pose>
     </model>
 
+
+    <model name = 'person19'>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+    </include>
+    <pose frame=''>3.97 -2.95 0 0 0 0.0</pose>
+    </model>
+
+    <model name = 'person20'>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+    </include>
+    <pose frame=''>6.5 -7.0 0 0 0 1.57</pose>
+    </model>
+
+    <model name = 'person21'>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+    </include>
+    <pose frame=''>6.1 -1.8 0 0 0 3.0</pose>
+    </model>
+
+    <model name = 'person22'>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+    </include>
+    <pose frame=''>9.96 -6.8 0 0 0 0.0</pose>
+    </model>
+
+    <model name = 'person23'>
+    <include>
+      <name>person_standing</name>
+      <uri>model://person_standing</uri>
+      <static>true</static>
+    </include>
+    <pose frame=''>1.8 -3.08 0 0 0 -3.0</pose>
+    </model>
+
   </world>
 </sdf>

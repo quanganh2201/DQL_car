@@ -27,20 +27,21 @@ import torch
 
 import sys
 
-MIN_DISTANCE = 0.9
-ERROR_DISTANCE = 0.8
+MIN_DISTANCE = 0.8
+ERROR_DISTANCE = 0.6
 XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot_copy.urdf'
 # XML_FILE_PATH = '/home/botcanh/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf'
 X_INIT = 0.0
 Y_INIT = 0.0
 THETA_INIT = 0.0
-GOAL_X = 5
-GOAL_Y = 5
+GOAL_X = 6
+GOAL_Y = 6
 HORIZONTAL_DIS = 9999
 GOAL_THRESHOLD1 = 0.8
 GOAL_THRESHOLD2 = 1
 GOAL_THRESHOLD3 = 5
 GOAL_THRESHOLD4 = 10
+
 
 class Env(Node):
     def __init__(self):
@@ -54,7 +55,8 @@ class Env(Node):
         self.velPub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.callShutdown = False
 
-        self.odom_subcription = self.odom_subscription = self.create_subscription(Odometry, '/wheel/odometry', self.odom_callback,
+        self.odom_subcription = self.odom_subscription = self.create_subscription(Odometry, '/wheel/odometry',
+                                                                                  self.odom_callback,
                                                                                   10)
         self.depth_subcription = self.create_subscription(Image, '/camera_link/depth/image_raw',
                                                           self.process_data_depth, 10)
@@ -73,17 +75,18 @@ class Env(Node):
         self.range = np.array([], dtype=float)
 
         self.done = False  # done episode or not
-        self.EPISODES = 100
-        self.steps = 1000
+        self.EPISODES = 1500
+        self.steps = 500
         self.current_step = 0
         self.current_ep = 0
         self.ep_done = False
         self.pre_action = 0
 
-        self.x_distance = 500
-        self.y_distance = 500
-        self.x_pre_distance = HORIZONTAL_DIS
-        self.y_pre_distance = HORIZONTAL_DIS
+        #odometry
+        self.x_distance = GOAL_X
+        self.y_distance = GOAL_Y 
+        self.x_pre_distance = GOAL_X
+        self.y_pre_distance = GOAL_Y
         self.distance = HORIZONTAL_DIS
 
         self.rewards = 0
@@ -91,6 +94,7 @@ class Env(Node):
         self.pre_best = -2000
         self.best_rewards = -2000
         self.current_state = None
+        self.new_state = None
         self.threshold_done4 = False
         self.threshold_done3 = False
         self.threshold_done2 = False
@@ -104,9 +108,9 @@ class Env(Node):
         self.pre_epsilon = 1
         self.epsilon = 1  # 1 = 100% random actions
         self.memory = model5.ReplayMemory(self.train_model.replay_memory_size)
-        self.policy_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=64, fc2_dims=64,
+        self.policy_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=32, fc2_dims=32,
                                               n_actions=self.num_actions)
-        self.target_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=64, fc2_dims=64,
+        self.target_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=32, fc2_dims=32,
                                               n_actions=self.num_actions)
         # Make the target and policy networks the same (copy weights/biases from one network to the other)
         self.target_dqn.load_state_dict(self.policy_dqn.state_dict())
@@ -219,7 +223,8 @@ class Env(Node):
                                 temp = self.view_depth[y, x]
                                 if temp < depth:
                                     depth = temp
-                        cv2.putText(cv_image, f"{depth :.2f}m", (center_x + 5, center_y + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        cv2.putText(cv_image, f"{depth :.2f}m", (center_x + 5, center_y + 5), cv2.FONT_HERSHEY_SIMPLEX,
+                                    0.5,
                                     (255, 255, 255), 2)
                         self.posX = np.append(self.posX, center_x)
                         self.posY = np.append(self.posY, center_y)
@@ -255,21 +260,21 @@ class Env(Node):
         else:
             posi_x = 0
             posi_y = 0
-        state = [posi_x, posi_y,x_distance, y_distance, min_ran, distance]
+        state = [posi_x, posi_y, x_distance, y_distance, min_ran, distance]
         return state
 
     def setReward(self, state, pre_action, action, x_pre, y_pre):
         done = False
         distance = state[-1]
         min_ran = state[-2]
-        x_dis = state [-4]
+        x_dis = state[-4]
         y_dis = state[-3]
         posi_x = state[0]
         posi_y = state[1]
         rx_dis = 0
         ry_dis = 0
         reward = 0
-        if min_ran <= ERROR_DISTANCE and abs (posi_x -self.img_center_x) <= 300:
+        if min_ran <= ERROR_DISTANCE and abs(posi_x - self.img_center_x) <= 300:
             reward = -1000
             done = True
         if distance <= GOAL_THRESHOLD1:
@@ -281,9 +286,9 @@ class Env(Node):
             else:
                 pre = 0
             '''
-
+        '''
         if action == 0:  # straight
-            r_action = +0.3
+            r_action = +0.2
         else:
             r_action = -0.1
 
@@ -291,44 +296,45 @@ class Env(Node):
             r_change = -0.3
         else:
             r_change = 0
-
+        '''
+        '''
         if min_ran < MIN_DISTANCE and min_ran > ERROR_DISTANCE:
-            r_ob = -0.5
+            r_ob = -0.3
         else:
             r_ob = +0.05
-
         '''
+
         if x_pre > x_dis:
             rx_dis = 2**(x_dis/GOAL_X) 
         else:
-            rx_dis = -2 
-        '''
-
-        if x_pre <= x_dis:
-            rx_dis = -( 2**((GOAL_X-x_dis)/GOAL_X) )
+            rx_dis = -5 
         
-        '''
+
+        #if x_pre <= x_dis:
+        #   rx_dis = -(2 ** ((GOAL_X - x_dis) / GOAL_X))
+
+        
         if y_pre > y_dis:
             ry_dis = 2**(y_dis/GOAL_Y) 
         else:
-            ry_dis = -2
-        '''
-        if y_pre <= y_dis:
-            ry_dis = -( 2**((GOAL_Y-y_dis)/GOAL_Y) )
+            ry_dis = -5
+        
+        #if y_pre <= y_dis:
+        #    ry_dis = -(2 ** ((GOAL_Y - y_dis) / GOAL_Y))
 
-        reward += r_change + r_action + rx_dis + ry_dis +r_ob 
+        reward += rx_dis + ry_dis 
         return reward, done
 
     def step(self, action):
         if action == 0:
             ang_vel = 0.0
         elif action == 1:  # turn right
-            ang_vel = 0.4
+            ang_vel = 0.5
         elif action == 2:
-            ang_vel = -0.4
+            ang_vel = -0.5
 
         vel_cmd = Twist()
-        vel_cmd.linear.x = 0.3
+        vel_cmd.linear.x = 0.2
         vel_cmd.angular.z = ang_vel
         self.velPub.publish(vel_cmd)
 
@@ -357,7 +363,6 @@ class Env(Node):
         self.pre_action = None
         self.pre_distance = HORIZONTAL_DIS
         self.rewards = 0
-        self.step_count = 0
         self.threshold_done4 = False
         self.threshold_done3 = False
         self.threshold_done2 = False
@@ -379,16 +384,19 @@ class Env(Node):
                         self.train_model.state_to_dqn_input(self.current_state)).argmax().item()
 
             # Execute action
-            self.current_state = self.step(action)
-            reward, self.ep_done = self.setReward(self.current_state, self.pre_action, action, self.x_pre_distance, self.y_pre_distance)
+            self.new_state = self.step(action)
+            reward, self.ep_done = self.setReward(self.current_state, self.pre_action, action, self.x_pre_distance,
+                                                  self.y_pre_distance)
             # Accumulate reward
             self.rewards += reward
+            self.step_count += 1
             self.pre_action = action
             self.pre_distance = self.current_state[-1]
-            self.x_pre_distance = self.current_state [-4]
+            self.x_pre_distance = self.current_state[-4]
             self.y_pre_distance = self.current_state[-3]
             # Save experience into memory
-            self.memory.append((self.current_state, action, self.current_state, reward, self.done))
+            self.memory.append((self.current_state, action, self.new_state, reward, self.done))
+            self.current_state = self.new_state
             print(self.current_step)
         else:
             self.rewards_per_episode.append(self.rewards)
@@ -398,7 +406,7 @@ class Env(Node):
             if (self.current_ep != 0):
                 print(f'Episode {self.current_ep} Epsilon {self.epsilon}')
                 print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-                #self.train_model.plot_progress(self.rewards_per_episode, self.epsilon_history)
+                # self.train_model.plot_progress(self.rewards_per_episode, self.epsilon_history)
             print(self.best_rewards, self.rewards)
             # AVOID ERROR SPAWN
             if self.current_step <= 10:
@@ -415,7 +423,7 @@ class Env(Node):
             if len(self.memory) > self.train_model.mini_batch_size:
                 mini_batch = self.memory.sample(self.train_model.mini_batch_size)
                 self.train_model.optimize(mini_batch, self.policy_dqn, self.target_dqn)
-
+                print(len(self.memory))
                 # Decay epsilon
                 self.epsilon = max(self.epsilon - 1 / self.EPISODES, 0)
                 self.epsilon_history.append(self.epsilon)
@@ -426,6 +434,8 @@ class Env(Node):
                     self.target_dqn.load_state_dict(self.policy_dqn.state_dict())
                     self.step_count = 0
                     # Close environment
+            else:
+                print("OVER LOAD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             self.current_state, self.done = self.reset()
 
 
