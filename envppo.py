@@ -14,7 +14,6 @@ from rclpy.time import Time
 from rclpy.node import Node
 from datetime import datetime
 from std_srvs.srv import Trigger
-import random
 
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
@@ -23,7 +22,6 @@ from sensor_msgs.msg import Image
 import cv2
 
 import trainmodelpytorch
-import torch
 
 import sys
 
@@ -114,7 +112,7 @@ class Env(Node):
         self.learn_iters = 0
         self.best_score = 0
         self.score_history = []
-        self.agent = trainmodelpytorch.Agent(n_actions=self.num_actions, batch_size= 5, alpha= 0.0003, n_epochs= 4, input_dims= self.num_states)
+        self.agent = trainmodelpytorch.Agent(n_actions=self.num_actions, batch_size= 5, alpha= 0.0003, n_epochs= 4, input_dims= (self.num_states))
 
     # FOR SPAWNING MODEL IN GAZEBO
     def delete_entity(self, name):
