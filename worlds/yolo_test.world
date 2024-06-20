@@ -70,7 +70,7 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>10.0 3.0 0 0 0 0</pose>
+    <pose frame=''>3.0 1.0 0 0 0 0</pose>
     </model>
 
     <model name = 'person2'>
@@ -79,7 +79,7 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>11.0 5.0 0 0 0 0</pose>
+    <pose frame=''>1.0 3.0 0 0 0 0</pose>
     </model>
 
     <model name = 'person3'>
@@ -88,7 +88,7 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>14.0 6.0 0 0 0 1.56</pose>
+    <pose frame=''>1.0 5.0 0 0 0 1.56</pose>
     </model>
 
 
@@ -98,7 +98,7 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>8.0 4.0 0 0 0 -1.56</pose>
+    <pose frame=''>3.0 3.0 0 0 0 -1.56</pose>
     </model>
 
     <model name = 'person5'>
@@ -107,7 +107,7 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>5.0 -2.0 0 0 0 2.0</pose>
+    <pose frame=''>5.0 1.0 0 0 0 2.0</pose>
     </model>
 
     <model name = 'person6'>
@@ -116,7 +116,7 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>0.3 6.2 0 0 0 3.0</pose>
+    <pose frame=''>7.0 1.0 0 0 0 3.0</pose>
     </model>
 
     <model name = 'person7'>
@@ -125,7 +125,7 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>-5.4 3.2 0 0 0 -1.58</pose>
+    <pose frame=''>5.0 3.0 0 0 0 -1.58</pose>
     </model>
 
     <model name = 'person8'>
@@ -134,144 +134,10 @@
       <uri>model://person_standing</uri>
       <static>true</static>
     </include>
-    <pose frame=''>-2.9 2.02 0 0 0 0.0</pose>
-    </model>
-
-    <model name = 'person9'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>-6.0 1.0 0 0 0 1.0</pose>
-    </model>
-
-    <model name = 'person10'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>3.63 5.5 0 0 0 -3.0</pose>
-    </model>
-
-    <model name = 'person11'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>-6.32 -5.22 0 0 0 2.0</pose>
-    </model>
-
-    <model name = 'person12'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>10.94 -5.57 0 0 0 3.0</pose>
-    </model>
-
-    <model name = 'person13'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>13.29 -0.67 0 0 0 0.0</pose>
-    </model>
-
-    <model name = 'person14'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>3.97 2.95 0 0 0 0.0</pose>
-    </model>
-
-    <model name = 'person15'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>6.5 7.0 0 0 0 1.57</pose>
-    </model>
-
-    <model name = 'person16'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>6.1 1.8 0 0 0 3.0</pose>
-    </model>
-
-    <model name = 'person17'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>9.96 6.8 0 0 0 0.0</pose>
-    </model>
-
-    <model name = 'person18'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>1.8 3.08 0 0 0 -3.0</pose>
+    <pose frame=''>3.0 5.0 0 0 0 0.0</pose>
     </model>
 
 
-    <model name = 'person19'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>3.97 -2.95 0 0 0 0.0</pose>
-    </model>
-
-    <model name = 'person20'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>6.5 -7.0 0 0 0 1.57</pose>
-    </model>
-
-    <model name = 'person21'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>6.1 -1.8 0 0 0 3.0</pose>
-    </model>
-
-    <model name = 'person22'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>9.96 -6.8 0 0 0 0.0</pose>
-    </model>
-
-    <model name = 'person23'>
-    <include>
-      <name>person_standing</name>
-      <uri>model://person_standing</uri>
-      <static>true</static>
-    </include>
-    <pose frame=''>1.8 -3.08 0 0 0 -3.0</pose>
-    </model>
 
   </world>
 </sdf>

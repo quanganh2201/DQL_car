@@ -15,6 +15,8 @@ from rclpy.node import Node
 from datetime import datetime
 from std_srvs.srv import Trigger
 import random
+from tf_transformations import euler_from_quaternion
+
 
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
@@ -28,21 +30,21 @@ import torch
 import matplotlib.pyplot as plt
 import threading
 import sys
+import statistics
 
 MIN_DISTANCE = 0.8
-ERROR_DISTANCE = 0.6
+ERROR_DISTANCE = 0.5
 XML_FILE_PATH = '/home/botcanh/dev_ws/src/two_wheeled_robot/urdf/two_wheeled_robot_copy.urdf'
 # XML_FILE_PATH = '/home/botcanh/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf'
 X_INIT = 0.0
 Y_INIT = 0.0
 THETA_INIT = 0.0
-GOAL_X = 6
-GOAL_Y = 6
+GOAL_X = 9
+GOAL_Y = 9
+YAW = math.atan2(GOAL_X- X_INIT, GOAL_Y - Y_INIT)
 HORIZONTAL_DIS = 9999
-GOAL_THRESHOLD1 = 0.8
-GOAL_THRESHOLD2 = 1
-GOAL_THRESHOLD3 = 5
-GOAL_THRESHOLD4 = 10
+GOAL_THRESHOLD1 = 1.0
+
 
 
 class Env(Node):
@@ -75,7 +77,7 @@ class Env(Node):
         self.view_depth_range = 10 * np.ones([5], dtype=float) #  depth in each range
 
         self.done = False  # done episode or not
-        self.EPISODES = 100
+        self.EPISODES = 2000
         self.steps = 300
         self.current_step = 0
         self.current_ep = 0
@@ -87,12 +89,15 @@ class Env(Node):
         self.y_distance = GOAL_Y 
         self.x_pre_distance = GOAL_X
         self.y_pre_distance = GOAL_Y
-        self.distance = HORIZONTAL_DIS
+        self.yaw = YAW
+        self.distance = round(math.hypot(GOAL_X, GOAL_Y)) 
+        self.pre_distance = HORIZONTAL_DIS
+        self.ABSOLUTE_DISTANCE = math.hypot(GOAL_X, GOAL_Y)
 
         self.rewards = 0
         self.step_count = 0
-        self.pre_best = -1000
-        self.best_rewards = -1000
+        self.pre_best = -100
+        self.best_rewards = -100
         self.current_state = None
         self.new_state = None
         self.threshold_done1 = False
@@ -100,7 +105,7 @@ class Env(Node):
         # TRAIN PARAMETERS
         self.train_model = model5.CarDQL()
         self.num_states = 7
-        self.num_actions = 7
+        self.num_actions = 5
 
         self.pre_epsilon = 1
         self.epsilon = 1  # 1 = 100% random actions
@@ -117,6 +122,7 @@ class Env(Node):
 
         # List to keep track of rewards collected per episode. Initialize list to 0's.
         self.rewards_per_episode = []
+        self.avg_rewards = []
 
         # List to keep track of epsilon decay
         self.epsilon_history = []
@@ -125,7 +131,7 @@ class Env(Node):
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
         #PLOTTING PARAMETERS AND FUNCTIONS
-        self.fig, self.axes = plt.subplots(2, 1)
+        self.fig, self.axes = plt.subplots(1, 1)
         self.lock = threading.Lock()
 
     # FOR SPAWNING MODEL IN GAZEBO
@@ -171,6 +177,8 @@ class Env(Node):
             self.req.initial_pose.position.x = x
             self.req.initial_pose.position.y = y
             self.req.initial_pose.position.z = z
+            self.req.initial_pose.orientation.z = 0.38
+            self.req.initial_pose.orientation.w = 0.92
 
             future = self.spawnclient.call_async(self.req)
             future.add_done_callback(self.spawn_entity_callback)
@@ -224,7 +232,8 @@ class Env(Node):
                         cv2.putText(cv_image, f"{depth :.2f}m", (center_x + 5, center_y + 5), cv2.FONT_HERSHEY_SIMPLEX,
                                     0.5,
                                     (255, 255, 255), 2)
-                        self.view_depth_range[(center_x)%view_range] = depth
+                        if self.view_depth_range[int((center_x - 1)/view_range)] > depth:
+                            self.view_depth_range[int((center_x - 1)/view_range)] = depth
 
         annotated_frame = results[0].plot(labels=True)
         img_msg = self.bridge.cv2_to_imgmsg(annotated_frame)
@@ -236,30 +245,28 @@ class Env(Node):
         self.distance = math.hypot(x - GOAL_X, y - GOAL_Y)
         self.x_distance = abs(x - GOAL_X)
         self.y_distance = abs(y - GOAL_Y)
+        orientation_q = msg.pose.pose.orientation
+        orientation_list = [orientation_q.x, orientation_q.y, orientation_q.z, orientation_q.w]
+        _,_,self.yaw = euler_from_quaternion(orientation_list)
 
     def getState(self):
         x_distance = self.x_distance
         y_distance = self.y_distance
         distance = self.view_depth_range
-        state = [distance[0], distance[1], distance[2], distance[3], distance[4], x_distance, y_distance, distance]
+        goal_distance = self.distance
+        yaw = self.yaw
+        state = [distance[0], distance[1], distance[2], distance[3], distance[4], goal_distance, yaw]
         return state
 
-    def setReward(self, state, pre_action, action, x_pre, y_pre):
+    def setReward(self, state):
         done = False
-        distance = state[-1]
-        x_dis = state[-3]
-        y_dis = state[-2]
+        distance = state[-2]
+        yaw = state[-1]
         rx_dis = 0
         ry_dis = 0
+        r_dis = 0
         reward = 0
-        for temp in range(5):
-            if temp <= ERROR_DISTANCE  <= 300:
-                reward = -1000
-                done = True
-        if distance <= GOAL_THRESHOLD1:
-            reward += 1000
-            done = True
-            '''
+        '''
             if pre_action == None and pre_distance == None:
                 pre = 0
             else:
@@ -283,28 +290,35 @@ class Env(Node):
             r_ob = +0.05
         '''
 
-        if x_pre > x_dis:
-            rx_dis = 2**(x_dis/GOAL_X) 
-        else:
-            rx_dis = -5 
+        #if x_pre > x_dis:
+        #    rx_dis = 2**(x_dis/GOAL_X) 
+        #else:
+        #    rx_dis = -5 
         
 
         #if x_pre <= x_dis:
         #   rx_dis = -(2 ** ((GOAL_X - x_dis) / GOAL_X))
 
         
-        if y_pre > y_dis:
-            ry_dis = 2**(y_dis/GOAL_Y) 
-        else:
-            ry_dis = -5
+        #if y_pre > y_dis:
+        #    ry_dis = 2**(y_dis/GOAL_Y) 
+        #else:
+        #    ry_dis = -5
         
         #if y_pre <= y_dis:
         #    ry_dis = -(2 ** ((GOAL_Y - y_dis) / GOAL_Y))
-
-        reward += rx_dis + ry_dis 
+        if math.fabs(yaw - YAW) <= 1.0:
+            reward =  2**(distance / self.ABSOLUTE_DISTANCE)
+        for temp in range(1,4):
+            if state[temp] <= ERROR_DISTANCE:
+                reward -= 100
+                done = True
+        if distance <= GOAL_THRESHOLD1:
+            reward = 500
+            done = True
         return reward, done
 
-    def step(self, action):
+    def step(self, action, reward):
         if action == 0:
             ang_vel = 0.0
         elif action == 1:  # turn right
@@ -315,18 +329,16 @@ class Env(Node):
             ang_vel = 0.7
         elif action == 4:
             ang_vel = -0.7
-        elif action == 5:
-            ang_vel = 0.17
-        elif action == 6:
-            ang_vel = -0.17
 
         vel_cmd = Twist()
-        vel_cmd.linear.x = 0.15
+        vel_cmd.linear.x = 0.15 * reward
+        if vel_cmd.linear.x < 0.0:
+            vel_cmd.linear.x = 0.05
         vel_cmd.angular.z = ang_vel
         self.velPub.publish(vel_cmd)
 
         state = self.getState()
-        return np.asarray(state)
+        return state
 
     def reset(self):
         self.delete_entity('two_wheeled_robot')
@@ -334,12 +346,6 @@ class Env(Node):
         # SHOULD HAVE A TIMER HERE
         print("deleted")
         i = 0
-
-        while (i < 10000):
-            j = 0
-            while (j < 10000):
-                j = j + 1
-            i = i + 1
 
         self.call_spawn_entity_service('two_wheeled_robot', XML_FILE_PATH, X_INIT, Y_INIT, THETA_INIT)
         print("respawned")
@@ -355,11 +361,23 @@ class Env(Node):
 
     #PLOTTING FUNCTIONS
     def plot_progress(self):
-        self.axes[0].clear()
-        self.axes[0].plot(self.rewards_per_episode)
-        self.axes[1].clear()
-        self.axes[1].plot(self.epsilon_history)
-        plt.pause(0.01)
+        # Create new graph
+        plt.figure(1)
+
+        # Plot average rewards (Y-axis) vs episodes (X-axis)
+        # rewards_curve = np.zeros(len(rewards_per_episode))
+        # for x in range(len(rewards_per_episode)):
+        # rewards_curve[x] = np.min(rewards_per_episode[max(0, x-10):(x+1)])
+        #plt.subplot(121)  # plot on a 1 row x 2 col grid, at cell 1
+        # plt.plot(sum_rewards)
+        plt.plot(self.avg_rewards)
+
+        # Plot epsilon decay (Y-axis) vs episodes (X-axis)
+        #plt.subplot(122)  # plot on a 1 row x 2 col grid, at cell 2
+        #plt.plot(self.epsilon_history)
+
+        # Save plots
+        plt.savefig('car_dql.png')
 
     def timer_callback(self):  # train
         if self.current_state is None:
@@ -369,7 +387,7 @@ class Env(Node):
             # Select action based on epsilon-greedy
             if random.random() < self.epsilon:
                 # select random action
-                action = np.random.choice([0, 1, 2, 3, 4, 5, 6])  # actions: 0=left,1=left,2=right
+                action = np.random.choice([0, 1, 2, 3, 4])  # actions: 0=left,1=left,2=right
             else:
                 # select best action
                 with torch.no_grad():
@@ -377,23 +395,27 @@ class Env(Node):
                         self.train_model.state_to_dqn_input(self.current_state)).argmax().item()
 
             # Execute action
-            self.new_state = self.step(action)
-            reward, self.ep_done = self.setReward(self.current_state, self.pre_action, action, self.x_pre_distance,
-                                                  self.y_pre_distance)
+            reward, self.ep_done = self.setReward(self.current_state)
+            self.new_state = self.step(action, reward)
             # Accumulate reward
             self.rewards += reward
             self.step_count += 1
             self.pre_action = action
-            self.pre_distance = self.current_state[-1]
-            self.x_pre_distance = self.current_state[-3]
-            self.y_pre_distance = self.current_state[-2]
+            #self.x_pre_distance = self.current_state[-3]
+            #self.y_pre_distance = self.current_state[-2]
+            #self.pre_distance = self.current_state[-1]
             # Save experience into memory
             self.memory.append((self.current_state, action, self.new_state, reward, self.done))
             self.current_state = self.new_state
             print("current, step",self.current_step)
             print("adding reward", reward)
         else:
+            if self.rewards < -300:
+                self.rewards = -300
+            elif self.rewards > 500:
+                self.rewards = 500   
             self.rewards_per_episode.append(self.rewards)
+            self.avg_rewards.append(statistics.mean(self.rewards_per_episode))
             self.ep_done = True
             self.current_ep += 1
             # Graph training progress
@@ -405,10 +427,10 @@ class Env(Node):
                 # self.train_model.plot_progress(self.rewards_per_episode, self.epsilon_history)
             print(self.best_rewards, self.rewards)
             # AVOID ERROR SPAWN
-            if self.current_step <= 10:
-                self.rewards = self.pre_best
-                self.best_rewards = self.pre_best
-                self.epsilon = self.pre_epsilon
+            #if self.current_step <= 5:
+            #    self.rewards = -300
+            #   self.best_rewards = -300
+            #    self.epsilon = self.pre_epsilon
             if self.rewards > self.best_rewards:
                 self.best_rewards = self.rewards
                 self.pre_best = self.best_rewards

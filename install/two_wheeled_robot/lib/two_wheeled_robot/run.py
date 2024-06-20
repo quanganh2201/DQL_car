@@ -41,7 +41,7 @@ GOAL_THRESHOLD1 = 0.8
 GOAL_THRESHOLD2 = 1
 GOAL_THRESHOLD3 = 5
 GOAL_THRESHOLD4 = 10
-model_filepath = "car_dql_761.pt"
+model_filepath = "car_dql_16.pt"
 
 class Env(Node):
     def __init__(self):
@@ -57,14 +57,14 @@ class Env(Node):
 
         self.odom_subcription = self.odom_subscription = self.create_subscription(Odometry, '/wheel/odometry',
                                                                                   self.odom_callback,
-                                                                                  10)
+                                                                                  50)
         self.depth_subcription = self.create_subscription(Image, '/camera_link/depth/image_raw',
-                                                          self.process_data_depth, 10)
+                                                          self.process_data_depth, 50)
         self.subscription = self.create_subscription(
             Image,
             '/camera_link/image_raw',
             self.image_callback,
-            10)
+            50)
         self.model = YOLO('~/yolobot/src/yolobot_recognition/scripts/yolov8n.pt')
         self.bridge = CvBridge()
         self.img_pub = self.create_publisher(Image, "/inference_result", 1)
@@ -108,9 +108,8 @@ class Env(Node):
         self.pre_epsilon = 1
         self.epsilon = 1  # 1 = 100% random actions
         self.memory = model5.ReplayMemory(self.train_model.replay_memory_size)
-        self.policy_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=32, fc2_dims=32,
-                                              n_actions=self.num_actions)
-	self.policy_dqn.load_state_dict(torch.load(model_filepath))
+        self.policy_dqn = model5.DeepQNetwork(input_dims=self.num_states, fc1_dims=32, fc2_dims=32, n_actions=self.num_actions)
+        self.policy_dqn.load_state_dict(torch.load(model_filepath))
 	
         # Policy network optimizer. "Adam" optimizer can be swapped to something else.
         self.train_model.optimizer = torch.optim.Adam(self.policy_dqn.parameters(), lr=self.train_model.learning_rate_a)
@@ -121,7 +120,7 @@ class Env(Node):
         # List to keep track of epsilon decay
         self.epsilon_history = []
 
-        timer_period = 0.05
+        timer_period = 0.3
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
 
@@ -320,23 +319,25 @@ class Env(Node):
     def timer_callback(self):  # train
         if self.current_state is None:
             self.current_state = self.getState()
-       if self.done == False:
-		with torch.no_grad():
-		    action = self.policy_dqn(model5.state_to_dqn_input(self.current_state)).argmax().item()
-		reward, done = self.setReward(self.current_state, self.pre_action, action, self.x_pre_distance,
-                                                  self.y_pre_distance)
-		self.new_state = self.step(action) #chọn giá trị mới theo step
-		self.current_state = self.new_state
-		self.step_count += 1
-	    	self.pre_action = action
-		self.pre_distance = self.current_state[-1]
-		self.x_pre_distance = self.current_state[-4]
-	    	self.y_pre_distance = self.current_state[-3]
-	elif self.done == True:
-	     	vel_cmd = Twist()
-		vel_cmd.linear.x = 0.0
-		vel_cmd.angular.z = 0.0
-		self.velPub.publish(vel_cmd)
+        if self.done == False:
+            with torch.no_grad():
+                action = self.policy_dqn(self.train_model.state_to_dqn_input(self.current_state)).argmax().item()
+            reward, done = self.setReward(self.current_state, self.pre_action, action, self.x_pre_distance,self.y_pre_distance)
+            self.new_state = self.step(action) #chọn giá trị mới theo step
+            self.current_state = self.new_state
+            self.step_count += 1
+            self.pre_action = action
+            self.pre_distance = self.current_state[-1]
+            self.x_pre_distance = self.current_state[-4]
+            self.y_pre_distance = self.current_state[-3]
+            self.rewards+=reward
+            print("adding reward ", reward)
+            print("REWARD: ", self.rewards)
+        elif self.done == True:
+            vel_cmd = Twist()
+            vel_cmd.linear.x = 0.0
+            vel_cmd.angular.z = 0.0
+            self.velPub.publish(vel_cmd)
 
 def main(args=None):
     rclpy.init(args=args)

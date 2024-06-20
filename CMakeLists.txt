@@ -28,6 +28,8 @@ install(PROGRAMS
   scripts/env.py
   scripts/model5.py
   scripts/run.py
+  scripts/trainmodelpytorch.py
+  scripts/envppo.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

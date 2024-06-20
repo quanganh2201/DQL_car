@@ -798,6 +798,7 @@
 /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/rviz/rviz_basic_settings.rviz
 /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/env.py
 /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/model5.py
+/home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/test.py
 /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/__pycache__/env.cpython-310.pyc
 /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/__pycache__/model5.cpython-310.pyc
 /home/botcanh/dev_ws/src/two_wheeled_robot/install/two_wheeled_robot/share/two_wheeled_robot/scripts/model_launch.py

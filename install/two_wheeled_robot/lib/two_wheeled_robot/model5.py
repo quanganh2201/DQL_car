@@ -52,8 +52,8 @@ class CarDQL():
     # Hyperparameters (adjustable)
     learning_rate_a = 0.001  # learning rate (alpha)
     discount_factor_g = 0.95  # discount rate (gamma)
-    network_sync_rate = 25000  # number of steps the agent takes before syncing the policy and target network
-    replay_memory_size = 750000  # size of replay memory
+    network_sync_rate = 2500  # number of steps the agent takes before syncing the policy and target network
+    replay_memory_size = 50000  # size of replay memory
     mini_batch_size = 64  # size of the training data set sampled from the replay memory
 
 
@@ -218,11 +218,12 @@ class CarDQL():
         loss.backward()
         self.optimizer.step()
 
-    def state_to_dqn_input(self, state) -> torch.Tensor:       
-        state_x = state[0]
-        state_y = state[1]
-        state_dis = state[4]
-        state_x_distacne = state[2]
-        state_y_distacne = state[3]
-        state_goal_distance = state[5]
-        return torch.FloatTensor([state_x, state_y, state_x_distacne , state_y_distacne, state_dis, state_goal_distance])
+    def state_to_dqn_input(self, state) -> torch.Tensor:
+        dis_1 = state[0]
+        dis_2 = state[1]
+        dis_3 = state[2]
+        dis_4 = state[3]
+        dis_5 = state[4]
+        state_x_distacne = state[5]
+        state_y_distacne = state[6]
+        return torch.FloatTensor([dis_1, dis_2,dis_3,dis_4,dis_5, state_x_distacne , state_y_distacne])

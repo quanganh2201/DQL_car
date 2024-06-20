@@ -44,22 +44,18 @@ class ImageSubscriber(Node):
         self.view_depth = np.array(self.view_depth, dtype=np.float32)
         #alpha: contrast 0 -127, beta: brightness 0 -100
         self.depth_img = cv2.convertScaleAbs(self.view_depth, alpha=10 , beta=30)
-        #cv2.imshow('view', self.depth_img)
-        #cv2.imshow('view0', self.view_depth)
+        cv2.imshow('view', self.depth_img)
+        cv2.imshow('view0', self.view_depth)
 
     def image_callback(self, msg):
-        self.posX = np.array([], dtype=int)
-        self.posY = np.array([], dtype=int)
-        self.range = np.array([], dtype=float)
-
+        self.view_depth_range = 10 * np.ones([5], dtype=float)
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         results = self.model(cv_image)
         # print(cv_image.size)
         height, width, _ = cv_image.shape
-        range = width
         self.img_center_x = cv_image.shape[0] // 2
         img_center_y = cv_image.shape[1] // 2
-
+        view_range = width / 5
         depth = 10
         if len(results) > 0:
             for r in results:
@@ -87,17 +83,11 @@ class ImageSubscriber(Node):
                                 temp = self.view_depth[y, x]
                                 if temp < depth:
                                     depth = temp
-                        depth = self.view_depth[center_y, center_x]
                         cv2.putText(cv_image, f"{depth :.2f}m", (center_x + 5, center_y + 5), cv2.FONT_HERSHEY_SIMPLEX,
                                     0.5,
-                                    (255, 255, 255), 2)
-                        #self.posX = np.append(self.posX, center_x)
-                        #self.posY = np.append(self.posY, center_y)
-                        #self.range = np.append(self.range, depth)
-        #else:
-            #self.posX = np.append(self.posX, self.img_center_x)
-            #self.posY = np.append(self.posY, img_center_y)
-            #self.range = np.append(self.range, depth)
+                                   (255, 255, 255), 2)
+                        if self.view_depth_range[int((center_x - 1)/view_range)] > depth:
+                            self.view_depth_range[int((center_x - 1)/view_range)] = depth
 
         annotated_frame = results[0].plot(labels=True)
         img_msg = self.bridge.cv2_to_imgmsg(annotated_frame)
@@ -117,6 +107,7 @@ class ImageSubscriber(Node):
             velMsg.angular.z = 0.3
         '''
         #self.velPub.publish(velMsg)
+        #cv2.waitKey(1)
 
 def main(args=None):
     rclpy.init(args=args)
